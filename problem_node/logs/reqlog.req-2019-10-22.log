@@ -1,0 +1,14 @@
+[2019-10-22T18:07:36.173] [INFO] default - [::1 POST /admin/login 200 631ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:09:57.796] [INFO] default - [::1 GET /admin/push/read 200 248ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:10:28.917] [INFO] default - [::1 GET /admin/push/read 304 13ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:12:55.734] [INFO] default - [::1 GET /admin/navigation/read 200 33ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:12:57.792] [INFO] default - [::1 GET /admin/navigation/read 304 8ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:13:59.369] [INFO] default - 查看banner
+[2019-10-22T18:13:59.370] [INFO] default - [::1 GET /admin/home/banner 200 51ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:13:59.510] [INFO] default - [::1 GET /upload/upload_69cc55dcb9db3d29a2c91aa176f89431.jpg 304 2ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:13:59.518] [INFO] default - [::1 GET /upload/upload_5d9552196650ec0bbf35c47cc3fb6980.jpg 304 1ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:13:59.534] [INFO] default - [::1 GET /upload/upload_1189921dc21f605aea62ad5827cc7fe3.jpg 304 0ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:14:00.142] [INFO] default - [::1 POST /admin/home/copyrightread 200 6ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:14:00.844] [INFO] default - 查看banner
+[2019-10-22T18:14:00.845] [INFO] default - [::1 GET /admin/home/banner 304 8ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]
+[2019-10-22T18:15:10.338] [INFO] default - [::1 GET /admin/problem/read 200 74ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36]

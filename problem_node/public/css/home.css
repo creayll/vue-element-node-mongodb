@@ -1,0 +1,266 @@
+.layui-layout-body {
+    overflow: auto;
+}
+
+.layui-form-item {
+    display: inline-block;
+}
+
+.layui-input-block input {
+    display: inline-block;
+    width: 350px;
+}
+
+.notice {
+    margin-left: 52px;
+}
+
+.model_ctn {
+    margin-top: 20px;
+}
+
+.left_model {
+    margin-left: -8px;
+    min-height: 500px;
+}
+
+.right_model {
+    margin-right: -5px;
+}
+
+.modelBox {
+    margin-top: 2px;
+    width: 100%;
+    height: 30px;
+    border: 1px dashed #eee;
+}
+
+.btn_box {
+    text-align: center;
+    height: 50px;
+    padding-left: 42px;
+}
+
+.btn_box button {
+    float: left;
+    width: 100px;
+}
+
+.btn_box button i {
+    vertical-align: middle !important;
+    margin-right: 5px;
+}
+
+.questionModel {
+    text-align: left;
+    width: 98%;
+    min-height: 30px;
+    background-color: #fff;
+    color: #333;
+    font-weight: 600;
+    line-height: 30px;
+    padding-left: 10px;
+    border-bottom: 1px solid #efefef;
+    font-size: 16px;
+}
+
+.subTitleModel {
+    text-align: left;
+    width: 98%;
+    min-height: 30px;
+    background-color: #fff;
+    color: #4898FF;
+    line-height: 30px;
+    padding-left: 10px;
+    border-bottom: 1px solid #efefef;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.answerModel {
+    text-align: left;
+    width: 98%;
+    min-height: 30px;
+    background-color: #fff;
+    color: #333;
+    line-height: 30px;
+    padding-left: 10px;
+    border-bottom: 1px solid #efefef;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.quesetionList {
+    text-align: left;
+    width: 98%;
+    min-height: 30px;
+    background-color: #fff;
+    line-height: 30px;
+    padding-left: 10px;
+    /* border-bottom: 1px solid #efefef; */
+    font-size: 16px;
+}
+
+.quesetionList ul {
+    width: 98%;
+    min-height: 40px;
+}
+
+.quesetionList ul li {
+    position: relative;
+    width: 97%;
+    min-height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #efefef;
+    color: #333;
+    font-weight: 500;
+    padding-left: 12px;
+}
+
+.quesetionList ul li span::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: 18px;
+    left: 0;
+    background-color: #70859C;
+}
+
+.btnModel {
+    position: relative;
+    width: 98%;
+    height: 50px;
+    background: linear-gradient(-77deg, rgba(39, 196, 254, 1), rgba(72, 152, 255, 1));
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.picModel {
+    position: relative;
+    width: 98%;
+    height: 250px;
+    background-color: #fff;
+    color: #333;
+    line-height: 30px;
+    padding-left: 10px;
+    /* border-bottom: 1px solid #efefef; */
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#uploadform label {
+    position: relative;
+}
+
+#uploadform img {
+    width: 100%;
+}
+
+.picModel input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    /* display: none; */
+    width: 100%;
+    height: 251px;
+}
+
+.tips {
+    text-align: center;
+    line-height: 250px;
+}
+
+.choseBtn {
+    width: 142px;
+    margin-top: 20px;
+}
+
+.layui-layer-content {
+    text-align: center;
+}
+
+.hide {
+    display: none;
+}
+
+.layui-icon-form {
+    margin-left: 5px;
+}
+
+.mainbox {
+    width: 100%;
+    min-height: 500px;
+}
+
+.leftbox {
+    float: left;
+    width: 50%;
+    min-height: 500px;
+    border-right: 1px solid #eee;
+}
+
+.rightbox {
+    float: left;
+    width: 49%;
+    min-height: 500px;
+}
+
+.layui-card-header {
+    text-align: left;
+}
+
+.kwinputbox {
+    display: inline-block;
+    width: 250px;
+    margin-bottom: 0px;
+}
+
+.kwinputbox .layui-input-block {
+    width: 100%;
+}
+
+.kwinputbox .layui-input-block input {
+    vertical-align: middle;
+    width: 100%;
+}
+
+.searchBtn {
+    margin-left: 5px;
+}
+
+.layui-card-body input {}
+
+.listForm {
+    text-align: left;
+}
+
+.nodata {
+    text-align: center;
+    line-height: 250px;
+}
+
+.noanswers {
+    text-align: center;
+    line-height: 250px;
+}
+
+h3 {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ans,
+.state {
+    text-align: left;
+    margin-top: 20px;
+}
