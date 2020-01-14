@@ -53,9 +53,11 @@
 	    sockets: {
 	        connect: function () {
 				console.log('连接connect')
+				 this.$socket.emit('message', '用户来啦');      //监听connect事件
 	        },
 	        message_client: function (data) {
 	        	if(data){
+	        	    console.log(data)
 	        		this.$store.dispatch("pushstore/changeshow", true)
 	        	}
 	        },
@@ -106,6 +108,7 @@
 			},
 			activechange(val){
 				this.$store.dispatch("themecolor/changethemecolor", val)
+				localStorage.setItem('themecolor', val)
 				console.log(this.color)
 			},
 			elswitch(){				

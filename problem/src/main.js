@@ -14,7 +14,7 @@ Vue.use(new VueSocketIO({
 }))
 
 
-import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, DropdownMenu, DropdownItem, Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,Col} from 'element-ui';
+import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, DropdownMenu, DropdownItem, Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,Col,Table,TableColumn} from 'element-ui';
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Row)
 Vue.use(Button)
@@ -43,6 +43,8 @@ Vue.use(InputNumber)
 Vue.use(TimePicker)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
+Vue.use(Table)
+Vue.use(TableColumn)
 Vue.config.productionTip = false
 
 Vue.prototype.GLOBAL = {
