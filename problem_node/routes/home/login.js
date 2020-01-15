@@ -5,6 +5,6 @@ const express = require('express');
 const router = express.Router();
 const Login = require('../../controller/'+api+'/home/login');
 
-router.get('/', Login.login);
+router.post('/', Login.login);
 
 module.exports = router

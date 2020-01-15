@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 import i18n from './i18n'
 import store from './store'
-
-
+window.axios = require('axios');
+Vue.prototype.https = 'http://localhost:3000/';//测试环境
 import VueSocketIO from 'vue-socket.io'
 Vue.use(new VueSocketIO({
     debug: true,

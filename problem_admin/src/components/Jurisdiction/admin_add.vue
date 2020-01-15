@@ -3,7 +3,7 @@
 		<el-form-item label="姓名" prop="name">
 			<el-input v-model="ruleForm.name"></el-input>
 		</el-form-item>
-		<el-form-item label="电话" prop="name">
+		<el-form-item label="电话" prop="phone">
 			<el-input v-model="ruleForm.phone"></el-input>
 		</el-form-item>		
 		<el-form-item label="密码" prop="pass">
@@ -66,6 +66,12 @@
 						validator: validatePass,
 						trigger: 'blur'
 					}],
+                    phone: [{
+                            required: true,
+                            message: '请输入电话号码',
+                            trigger: 'blur'
+                        }
+                    ],					
 					checkPass: [{
 						validator: validatePass2,
 						trigger: 'blur'

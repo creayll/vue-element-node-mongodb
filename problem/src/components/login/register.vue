@@ -2,13 +2,13 @@
 	<div class="login">
 		<el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="84px" class="demo-ruleForm">
 			<el-form-item label="用户昵称" prop="name">
-				<el-input type="password" v-model="ruleForm.name" autocomplete="off"></el-input>
+				<el-input type="text" v-model="ruleForm.name" autocomplete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="用户密码" prop="pass">
-				<el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+				<el-input type="text" v-model="ruleForm.pass" autocomplete="off"></el-input>
 			</el-form-item>
 			<el-form-item label="确认密码" prop="checkPass">
-				<el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+				<el-input type="text" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
 			</el-form-item>
 			<el-form-item style="text-align: center;">
 				<el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -72,7 +72,16 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
-						this.$router.push({path:'/home'})
+                        axios.post(this.https+'home/register',this.ruleForm)
+                            .then((res)=>{
+                                console.log(res.data)
+                                if(res.data.status==1){                                 
+//                                  this.$router.push({path:'/home'})                                    
+                                };              
+                            })
+                            .catch(function(error){
+                                console.log(error);
+                            })  
 					} else {
 						console.log('error submit!!');
 						return false;
