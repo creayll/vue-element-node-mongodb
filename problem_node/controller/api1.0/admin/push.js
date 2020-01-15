@@ -4,6 +4,8 @@ const Push = require("../../../model/push.js");
 
 class Message_push{
 	async save(req, res, next){
+	    console.log(121212)
+	    console.log(req.cookies)
 		var uid=req.cookies.user._id
 		var query=req.body
 		query.uid=uid

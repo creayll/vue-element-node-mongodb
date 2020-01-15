@@ -16,7 +16,7 @@ module.exports = (app)=>{
 	app.use('/admin/register', register);	
 	app.use('/admin/login', login);	
 	app.use('/admin/exit', token.exit);	//退出
-	app.use('/admin/home',token.check, home);
+	app.use('/admin/home', home);
 	app.use('/admin/problem',token.check, problem);
 	app.use('/admin/push',token.check, push);
 	app.use('/admin/navigation',token.check, navigation);	

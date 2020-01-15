@@ -8,7 +8,7 @@
 		</el-form-item>		
 		<el-form-item label="接收群" prop="grouptype"> 
 			<el-checkbox-group v-model="ruleForm.grouptype" style="display: inline-block;margin-left: 30px;">
-				<el-checkbox v-for='(item,i) in checkbox' :key='i' :label="item.type" name="type">{{item.type}}</el-checkbox>
+				<el-checkbox v-for='(item,i) in checkbox' :key='i' :label="item.value" name="type">{{item.type}}</el-checkbox>
 			</el-checkbox-group>
 		</el-form-item>		
 		<el-form-item>

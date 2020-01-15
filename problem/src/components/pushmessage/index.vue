@@ -15,7 +15,7 @@
 			<div style="margin-top: 20px">
 				<el-button @click="toggleSelection([tableData[1], tableData[2]])">删除</el-button>
 				<el-button @click="toggleSelection()">标记已读</el-button>
-				<el-button @click="toggleSelection([tableData[1], tableData[2]])">全部已读</el-button>
+				<el-button @click="toggleSelection(tableData)">全部已读</el-button>
 				<el-button @click="toggleSelection()">全部删除</el-button>				
 			</div>
 			<el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
@@ -62,13 +62,9 @@
 
 			methods: {
 				toggleSelection(rows) {
-					if(rows) {
-						rows.forEach(row => {
-							this.$refs.multipleTable.toggleRowSelection(row);
-						});
-					} else {
-						this.$refs.multipleTable.clearSelection();
-					}
+					rows.forEach(row => {
+						this.$refs.multipleTable.toggleRowSelection(row,true);
+					});
 				},
 				handleSelectionChange(val) {
 					this.multipleSelection = val;
