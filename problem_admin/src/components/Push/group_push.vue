@@ -47,14 +47,14 @@
 					}],					
 				}
 			};
-		},
+		}, 		
 		methods: {
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 					    axios.post(this.https+'admin/push/save',this.ruleForm)
 						    .then((res)=>{
-						    	this.$socket.emit("message",this.ruleForm); //触发start
+						    	this.$socket.emit("admin_group_message",this.ruleForm); //触发start
 						        console.log(res.data);   
 						    })
 						    .catch(function(error){

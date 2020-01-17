@@ -26,7 +26,8 @@ class Register{
 					var user_list=new User_list({
 						name:name,
 						psd:md5psd,
-						ip:num
+						ip:num,
+						type:0 //1==vip, 0==普通    刚注册用户默认为普通用户
 					})
 					user_list.save().then((data)=>{
 						res.send({

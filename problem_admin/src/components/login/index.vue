@@ -52,8 +52,7 @@
 					    axios.post(this.https+'admin/login',this.ruleForm)
 						    .then((res)=>{
 						        if(res.data.status==1){						        	
-						        	this.$router.push({path:'/home'})
-						        	
+						        	this.$router.push({path:'/home'})						        	
 						        };		        
 						    })
 						    .catch(function(error){

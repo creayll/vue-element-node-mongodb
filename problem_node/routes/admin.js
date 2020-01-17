@@ -9,7 +9,7 @@ const push =require('./admin/push.js');
 const user =require('./admin/user.js');
 const config = require('../config');
 const api=config.api;
-const token = require('../controller/'+api+'/token');
+const token = require('../controller/'+api+'/admin/token');
 
 
 module.exports = (app)=>{

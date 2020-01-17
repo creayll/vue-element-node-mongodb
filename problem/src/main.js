@@ -13,8 +13,18 @@ Vue.use(new VueSocketIO({
     connection: 'http://localhost:3000',
 }))
 
+axios.interceptors.request.use(
+  config => {
+    config.headers['Authorization'] = localStorage.getItem('token');
+    return config
+  },
+  error => Promise.error(error)
+)
 
-import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, DropdownMenu, DropdownItem, Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,Col,Table,TableColumn} from 'element-ui';
+import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,
+    FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, 
+    DropdownMenu, DropdownItem,Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,
+    Col,Table,TableColumn,Badge} from 'element-ui';
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Row)
 Vue.use(Button)
@@ -45,6 +55,7 @@ Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Badge)
 Vue.config.productionTip = false
 
 Vue.prototype.GLOBAL = {

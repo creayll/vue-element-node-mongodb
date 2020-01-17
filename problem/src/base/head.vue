@@ -5,8 +5,11 @@
 		</div>
 		<div class="nav-right">
 			<router-link to="/pushmessage" style="float: left;color: white;font-size: 13px;margin-right: 20px;vertical-align: middle;position: relative;">
-			  	<i style="font-size: 22px;vertical-align: middle;" class="el-icon-message"></i>
-			  	<span class="dian" v-show='isshow'></span>					
+			  	<i style="font-size: 27px;vertical-align: middle;" class="el-icon-message"></i>
+			  	<div class="dian" v-if='messgenum>0'>{{messgenum}}</div>
+                <!--<el-badge :value="100" :max="10"  class="item">
+                  <el-button size="small" class="share-button" icon="el-icon-message"></el-button>
+                </el-badge>			  	-->
 			</router-link>
 			<el-dropdown trigger="click" style="float: left;">
 				<span class="el-dropdown-link">
@@ -23,7 +26,7 @@
 						<router-link to="/login/register">注册</router-link>
 					</el-dropdown-item>					
 					<el-dropdown-item icon="el-icon-s-release">
-						<router-link to="/login">退出</router-link>
+						<span @click="exit">退出</span>
 					</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>				
@@ -47,18 +50,19 @@
 		data() {
 			return {
 				lang:'',
-				langvalue:''
+				langvalue:'',
+				
 			};
 		},
 	    sockets: {
 	        connect: function () {
-				console.log('连接connect')
-				 this.$socket.emit('message', '用户来啦');      //监听connect事件
+				console.log('用户连接connect')
+//				 this.$socket.emit('message', '用户来啦');      //监听connect事件
 	        },
 	        message_client: function (data) {
 	        	if(data){
 	        	    console.log(data)
-	        		this.$store.dispatch("pushstore/changeshow", true)
+	        		this.$store.dispatch("pushstore/changeinit", 8)
 	        	}
 	        },
 	        customEmit: function (data) {
@@ -66,6 +70,15 @@
 	        }
 	    },			
         mounted(){
+            axios.get(this.https+'home/push/querynum')
+                .then((res)=>{
+                    this.$socket.emit("message",this.ruleForm); //触发start
+                    console.log(res.data);   
+                })
+                .catch(function(error){
+                    console.log(error);
+                })              
+            this.$store.dispatch("pushstore/changeinit", 8)
              //用户每次刷新页面都判断 是否缓存过 语言，缓存过的话 选择其中显示的应该是缓存的语言
              if(localStorage.getItem('locale') == 'en'){
              	this.lang = this.$i18n.locale = 'en';
@@ -81,7 +94,7 @@
 		   		color: state => state.color
 			}),
 		  	...mapState("pushstore",{
-		   		isshow: state => state.isshow
+		   		messgenum: state => state.messgenum
 			}),			
 			nav(){
 				return [{
@@ -121,7 +134,18 @@
                 }	
                 localStorage.setItem('locale', lang)
                 this.$i18n.locale =this.lang = lang    
-			}
+			},
+            exit(){
+                axios.get(this.https+'home/exit')
+                    .then((res)=>{
+                        if(res.data.status==1){
+                            this.$router.push({path:'/login'})
+                        }           
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })                  
+            }   			
 		}
 	}
 </script>
@@ -162,19 +186,22 @@
 			transform: translateY(-50%);
 			.dian{
 				border-radius: 100%;
-				height: 5px;
-				width: 5px;
+				height: 16px;
+				width: 16px;
+				line-height: 16px;
 				background: red;
 				position: absolute;
-				right: 4px;
-				top: 22px;
-				animation:show 1s infinite;	
+				right: -2px;
+				text-align: center;
+				top: 14px;
+				font-size: 12px;
+				/*animation:show 1s infinite;*/	
 			}
-			@keyframes show{
+			/*@keyframes show{
 				0% {top: 22px}
 				10% {top:24px}
 				100% {top:22}
-			}			
+			}			*/
 			.el-dropdown{
 				cursor: pointer;
 			}

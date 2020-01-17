@@ -1,4 +1,4 @@
-const User_list = require("../../model/user_list_admin.js");
+const User_list = require("../../../model/user_list_admin.js");
 
 class Token{
 	async check(req, res, next) {
@@ -6,7 +6,7 @@ class Token{
 		console.log("token:"+token)
 		if(token){
             User_list.findOne({token}).then((data)=>{   
-                console.log(data)
+//              console.log(data)
                 if(data){
                     next();
                 }else{
@@ -23,14 +23,15 @@ class Token{
             })      		    
 		}
 	}
-	async exit(req, res, next){			//退出
-		res.clearCookie('token');
-		res.clearCookie('user');
-		res.send({
-			status: 1,
-			message: '清除Cookie成功',
-		})			
-	}	
+	
+    async exit(req, res, next){         //退出
+        res.clearCookie('token');
+        res.clearCookie('user');
+        res.send({
+            status: 1,
+            message: '清除Cookie成功',
+        })          
+    }   	
 }
 	
 	

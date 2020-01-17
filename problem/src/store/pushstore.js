@@ -1,17 +1,22 @@
 export default {
 	namespaced: true, //命名空间为true
 	state: {
-		isshow:false
+		messgenum:0
 	},
     mutations: {
-      	changeshow (state, value) {
-      		console.log(value)
-        	state.isshow = value
+        init(state,num){
+            state.messgenum += num
+        },        
+      	add(state){
+        	state.messgenum += 1
+      	},
+      	reduce(state){
+      	    state.messgenum -= 1
       	}
     },
     actions: {
-		changeshow ({commit},value) {
-		    commit("changeshow", value)
-		}
+		changeinit ({commit},num) {
+		    commit("init",num)
+		},
     }	
 }

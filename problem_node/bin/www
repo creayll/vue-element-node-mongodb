@@ -23,9 +23,12 @@ app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
-  	socket.on('message',function(data){
+  	socket.on('admin_group_message',function(data){
   		io.emit('message_client', data);	     
   	});
+    socket.on('admin_personer_message',function(data){
+        io.emit('message_client', data);         
+    });  	
 });
 
 /**

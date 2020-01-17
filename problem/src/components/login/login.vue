@@ -54,7 +54,8 @@
                         axios.post(this.https+'home/login',this.ruleForm)
                             .then((res)=>{
                                 console.log(res.data)
-                                if(res.data.status==1){                                 
+                                if(res.data.status==1){
+                                    localStorage.setItem("token",res.data.token)
                                     this.$router.push({path:'/home'})                                    
                                 };              
                             })

@@ -10,6 +10,8 @@ class Login{
 	  	let md5psd = crypto.createHash("md5").update(psd).digest("hex");	
 	  	let token=crypto.createHash("md5").update(new Date().toString()).digest("hex");
 		User_list_admin.findOne({name:name,psd:md5psd},{psd:0}).then((data,err)=>{	//{psd:0}过滤psd字段
+		      console.log(111111)
+		      console.log(data)
 			if(data){			
 			  	User_list_admin.updateOne({name:name,psd:md5psd},{token:token},(err,result)=>{
 			  		if(err){console.log(err)}
