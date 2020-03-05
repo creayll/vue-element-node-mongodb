@@ -3,7 +3,7 @@ const config = require('../../config');
 const api=config.api;
 const express = require('express');
 const router = express.Router();
-const Push = require('../../controller/'+api+'/admin/push');
+const Push = require('../../controller/'+api+'/home/push');
 
 router.get('/querynum', Push.querynum);    
 module.exports = router

@@ -4,7 +4,7 @@ module.exports = ()=>{
 	var mongoose = require('mongoose');
 	var chalk = require('chalk');  //使输出不再单调,添加文字背景什么的,改变字体颜色什么的
 	const config = require('../config');
-	mongoose.connect(config.mongodb, {useNewUrlParser:true});
+	mongoose.connect(config.mongodb, {useNewUrlParser:true,useUnifiedTopology: true});
 	mongoose.Promise = global.Promise;
 	
 	const db = mongoose.connection;
@@ -20,7 +20,7 @@ module.exports = ()=>{
 	    mongoose.disconnect();
 	});
 	
-	db.on('close', function() {
+	db.on('close', function() {  
 	    console.log(
 	      chalk.red('数据库断开，重新连接数据库')
 	    );

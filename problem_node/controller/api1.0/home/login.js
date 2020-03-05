@@ -19,7 +19,7 @@ class Login{
                     res.send({
                         status: 1,
                         message: '登录成功',
-                        data:data,
+                        user:data,
                         token:token
                     })                      
                 })                              

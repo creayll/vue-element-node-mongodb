@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const JwtUtil = require('../../../utils/jwt'); 
 class Token{
 	async check(req, res, next) {	    
-		const token= req.get("Authorization");        
+		const token= req.get("token");        
 //      var token = new JwtUtil(token).verifyToken()
         console.log("token:5")
         console.log("token:"+token)

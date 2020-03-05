@@ -37,6 +37,8 @@
 			</div>				
 		</div>		
 		
+
+		<!-- 推送提示框 -->
 		<!--<el-menu router :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" :style="{background: color}" text-color="#fff" active-text-color="#ffd04b">
 			<el-menu-item v-for='(item,i) in nav' :index="item.path" :key='i'>{{item.name}}</el-menu-item>
 
@@ -61,24 +63,17 @@
 	        },
 	        message_client: function (data) {
 	        	if(data){
-	        	    console.log(data)
-	        		this.$store.dispatch("pushstore/changeinit", 8)
+					console.log(data)
+					this.$message('您收到一条新消息');
+					localStorage.setItem("messagenum",this.$store.state.pushstore.messgenum+1)
+	        		this.$store.dispatch("pushstore/changeadd")
 	        	}
 	        },
 	        customEmit: function (data) {
 	            console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
 	        }
 	    },			
-        mounted(){
-            axios.get(this.https+'home/push/querynum')
-                .then((res)=>{
-                    this.$socket.emit("message",this.ruleForm); //触发start
-                    console.log(res.data);   
-                })
-                .catch(function(error){
-                    console.log(error);
-                })              
-            this.$store.dispatch("pushstore/changeinit", 8)
+        mounted(){             
              //用户每次刷新页面都判断 是否缓存过 语言，缓存过的话 选择其中显示的应该是缓存的语言
              if(localStorage.getItem('locale') == 'en'){
              	this.lang = this.$i18n.locale = 'en';
@@ -136,16 +131,19 @@
                 this.$i18n.locale =this.lang = lang    
 			},
             exit(){
-                axios.get(this.https+'home/exit')
-                    .then((res)=>{
-                        if(res.data.status==1){
-                            this.$router.push({path:'/login'})
-                        }           
-                    })
-                    .catch(function(error){
-                        console.log(error);
-                    })                  
-            }   			
+				localStorage.clear()
+				this.$store.dispatch("pushstore/changeinit", 0)
+				this.$router.push({path:'/login'})
+                // axios.get(this.https+'home/exit')
+                //     .then((res)=>{
+                //         if(res.data.status==1){
+                //             this.$router.push({path:'/login'})
+                //         }           
+                //     })
+                //     .catch(function(error){
+                //         console.log(error);
+                //     })                  
+			}			   			
 		}
 	}
 </script>

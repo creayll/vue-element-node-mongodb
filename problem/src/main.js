@@ -15,7 +15,8 @@ Vue.use(new VueSocketIO({
 
 axios.interceptors.request.use(
   config => {
-    config.headers['Authorization'] = localStorage.getItem('token');
+    config.headers['token'] = localStorage.getItem('token')||'';
+    config.headers['user'] = localStorage.getItem('user')||'';
     return config
   },
   error => Promise.error(error)
@@ -24,7 +25,7 @@ axios.interceptors.request.use(
 import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,
     FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, 
     DropdownMenu, DropdownItem,Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,
-    Col,Table,TableColumn,Badge} from 'element-ui';
+    Col,Table,TableColumn,Badge,MessageBox,Message} from 'element-ui';
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Row)
 Vue.use(Button)
@@ -56,8 +57,10 @@ Vue.use(Checkbox)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Badge)
-Vue.config.productionTip = false
+Vue.prototype.$msgbox=MessageBox
+Vue.prototype.$message=Message
 
+Vue.config.productionTip = false
 Vue.prototype.GLOBAL = {
 	themebackground:'#409EFF'
 }

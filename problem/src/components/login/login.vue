@@ -16,6 +16,8 @@
 </template>
 
 <script>
+	import {mapActions, mapState,mapGetters} from "vuex";
+
 	export default {
 		data() {
 			var validatename = (rule, value, callback) => {
@@ -32,8 +34,8 @@
 			};
 			return {
 				ruleForm: {
-					name:'',
-					pass: ''
+					name:'123',
+					pass: '123'
 				},
 				rules: {
 					name: [{
@@ -47,6 +49,12 @@
 				}
 			};
 		},
+		computed: {
+		  // 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。
+		  	...mapState("pushstore",{
+		   		messgenum: state => state.messgenum
+			})
+		},		
 		methods: {
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
@@ -55,7 +63,19 @@
                             .then((res)=>{
                                 console.log(res.data)
                                 if(res.data.status==1){
-                                    localStorage.setItem("token",res.data.token)
+								axios.get(this.https+'home/push/querynum')
+									.then((res)=>{
+										// this.$socket.emit("message",this.ruleForm); //触发start
+										var messagenum=res.data.data.length
+										this.$store.dispatch("pushstore/changeinit", messagenum)	
+										localStorage.setItem("messagenum",messagenum)
+										console.log(res.data);   
+									})
+									.catch(function(error){
+										console.log(error);
+									}) 									
+									localStorage.setItem("token",res.data.token)
+									localStorage.setItem("user",JSON.stringify(res.data.user))									
                                     this.$router.push({path:'/home'})                                    
                                 };              
                             })

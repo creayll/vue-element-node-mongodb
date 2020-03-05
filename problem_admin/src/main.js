@@ -7,11 +7,9 @@ window.axios = require('axios');
 Vue.config.productionTip = false
 
 Vue.prototype.https = 'http://localhost:3000/';//测试环境
-//import vueSocketIO from 'vue-socket.io'
-//Vue.use(new vueSocketIO({
-//  debug: true,
-//  connection: 'http://localhost:3000',
-//}))
+
+axios.defaults.withCredentials = true 
+
 
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)

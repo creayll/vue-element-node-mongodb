@@ -3,7 +3,7 @@ const api=config.api;
 const home =require('./home/home.js');
 const login =require('./home/login.js');
 const register =require('./home/register.js');
-const push =require('./admin/push.js');
+const push =require('./home/push.js');
 
 const token = require('../controller/'+api+'/home/token');
 module.exports = (app)=>{
