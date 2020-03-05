@@ -1,5 +1,0 @@
-[2020-02-02T22:06:19.201] [INFO] default - [::1 OPTIONS /admin/login 200 4ms][http://localhost:8081/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
-[2020-02-02T22:06:19.221] [INFO] default - [::1 POST /admin/login 200 18ms][http://localhost:8081/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
-[2020-02-02T22:06:21.419] [INFO] default - [::1 POST /admin/login 200 4ms][http://localhost:8081/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
-[2020-02-02T22:06:38.411] [INFO] default - [::1 OPTIONS /admin/login 200 1ms][http://localhost:8081/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
-[2020-02-02T22:06:38.415] [INFO] default - [::1 POST /admin/login 200 2ms][http://localhost:8081/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
