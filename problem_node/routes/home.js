@@ -10,6 +10,5 @@ module.exports = (app)=>{
 	app.use('/', home);
 	app.use('/home/login', login);
 	app.use('/home/register', register);  
-	app.use('/home/exit', token.exit);    //退出
-	app.use('/home/push',token.check, push);
+	app.use('/home/push', push);
 }

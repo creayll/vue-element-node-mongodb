@@ -33,16 +33,30 @@ class Message_push{
     }
 
 	async read(req,res,next){
-		Push.find().populate({
+        var query = req.body
+        console.log(query)
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit
+        Push.count().then((res)=>{
+            return res
+        }).then((num)=>{
+            console.log(num)
+            var total = Math.ceil(num/limit)
+            Push.find().populate({
 				path: 'uid',
 				select:'name'
-			}).then((data)=>{
-				res.send({
-					status: 1,
-					message: '查询成功',
-					data:data
-				})				
-		})
+			}).limit(limit).skip(skip).then((data)=>{           
+                res.send({
+                    status: 1,
+                    message: '查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit
+                })               
+            })           
+        })
 	}	
 	
     async findone(req,res,next){
@@ -53,18 +67,6 @@ class Message_push{
                 message: '查询成功',
                 data:data
             })         
-        })
-    }
-    
-    async querynum(req,res,next){
-        var user=req.cookies.user
-        console.log(user)
-        Push.find({grouptype:{$elemMatch:{$eq:user.type}}}).then((data)=>{
-            res.send({
-                status: 1,
-                message: '查询成功',
-                data:data
-            })               
         })
     }
 }

@@ -5,7 +5,8 @@ import login from 'components/login/login'		//登录
 import register from 'components/login/register'		//注册
 
 
-import pushmessage from 'components/pushmessage'		//消息
+import pushmessage from 'components/pushmessage'		//消息 
+import messagedetail from 'components/pushmessage/messagedetail'		//消息
 
 import home from 'components/home'			//首页
 
@@ -70,6 +71,10 @@ export default new Router({
       path: '/pushmessage',
       name: 'pushmessage',
       component: pushmessage
+    },{
+      path: '/messagedetail',
+      name: 'messagedetail',
+      component: messagedetail
     },{
       path: '/solve',
       name: 'solve',

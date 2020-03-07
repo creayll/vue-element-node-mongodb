@@ -60,23 +60,23 @@
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
                         axios.post(this.https+'home/login',this.ruleForm)
-                            .then((res)=>{
-                                console.log(res.data)
+                            .then((res)=>{                               
                                 if(res.data.status==1){
-								axios.get(this.https+'home/push/querynum')
-									.then((res)=>{
-										// this.$socket.emit("message",this.ruleForm); //触发start
-										var messagenum=res.data.data.length
-										this.$store.dispatch("pushstore/changeinit", messagenum)	
-										localStorage.setItem("messagenum",messagenum)
-										console.log(res.data);   
-									})
-									.catch(function(error){
-										console.log(error);
-									}) 									
 									localStorage.setItem("token",res.data.token)
-									localStorage.setItem("user",JSON.stringify(res.data.user))									
-                                    this.$router.push({path:'/home'})                                    
+									localStorage.setItem("user",JSON.stringify(res.data.user))										
+									axios.get(this.https+'home/push/querynum')
+										.then((res)=>{
+											var messagenum=res.data.data
+											this.$store.dispatch("pushstore/changeinit", messagenum)												
+											if(this.$route.query.frompath){
+												this.$router.push({path:this.$route.query.frompath})  	
+											}else{
+												this.$router.push({path:'/home'})  	
+											}									
+										})
+										.catch(function(error){
+											console.log(error);
+										}) 									                                  
                                 };              
                             })
                             .catch(function(error){

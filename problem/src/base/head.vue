@@ -65,7 +65,6 @@
 	        	if(data){
 					console.log(data)
 					this.$message('您收到一条新消息');
-					localStorage.setItem("messagenum",this.$store.state.pushstore.messgenum+1)
 	        		this.$store.dispatch("pushstore/changeadd")
 	        	}
 	        },

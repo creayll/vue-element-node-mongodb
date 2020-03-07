@@ -5,11 +5,8 @@ class Token{
 	async check(req, res, next) {	    
 		const token= req.get("token");        
 //      var token = new JwtUtil(token).verifyToken()
-        console.log("token:5")
-        console.log("token:"+token)
 		if(token){
             User_list.findOne({token}).then((data)=>{   
-//              console.log(data)
                 if(data){
                     next();
                 }else{
@@ -25,16 +22,7 @@ class Token{
                 message: 'token丢失',
             })      		    
 		}
-	}
-	
-    async exit(req, res, next){         //退出
-        res.clearCookie('token');
-        res.clearCookie('user');
-        res.send({
-            status: 1,
-            message: '清除Cookie成功',
-        })          
-    }   	
+	}  	
 }
 	
 	

@@ -5,13 +5,16 @@ export default {
 	},
     mutations: {
         init(state,num){
-            state.messgenum = num||0
+			state.messgenum = num||0
+			localStorage.setItem("messagenum",state.messgenum)
         },        
       	add(state){
-        	state.messgenum += 1
+			state.messgenum += 1
+			localStorage.setItem("messagenum",state.messgenum)
       	},
       	reduce(state){
-      	    state.messgenum -= 1
+			  state.messgenum -= 1
+			  localStorage.setItem("messagenum",state.messgenum)
       	}
     },
     actions: {

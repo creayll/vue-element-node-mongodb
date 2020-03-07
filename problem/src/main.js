@@ -13,14 +13,9 @@ Vue.use(new VueSocketIO({
     connection: 'http://localhost:3000',
 }))
 
-axios.interceptors.request.use(
-  config => {
-    config.headers['token'] = localStorage.getItem('token')||'';
-    config.headers['user'] = localStorage.getItem('user')||'';
-    return config
-  },
-  error => Promise.error(error)
-)
+//导入格式化时间的插件
+import moment from 'moment'
+Vue.prototype.$moment = moment
 
 import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,
     FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, 
@@ -65,9 +60,33 @@ Vue.prototype.GLOBAL = {
 	themebackground:'#409EFF'
 }
 
+
+axios.interceptors.request.use(
+  config => {
+    config.headers['token'] = localStorage.getItem('token')||'';
+    config.headers['user'] = localStorage.getItem('user')||'';
+    return config
+  },
+  error => Promise.error(error)
+)
+
+
+axios.interceptors.response.use(
+  response => {
+    if(response.data.status==0){
+      router.push({path:'/login',query:{frompath:router.currentRoute.fullPath}}) 
+      return false
+    }
+    return response;
+  },
+  error => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
+
 router.afterEach((to,from,next) => {
-	console.log("to:"+to)
-    window.scrollTo(0,0);
+  window.scrollTo(0,0);
 });
 
 /* eslint-disable no-new */
