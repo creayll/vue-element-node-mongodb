@@ -25,7 +25,7 @@ class Login{
                 })                              
             }else{
                 res.send({
-                    status: 0,
+                    status: -1,
                     message: '账号或密码错误',
                 })              
             }

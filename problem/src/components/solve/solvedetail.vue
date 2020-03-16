@@ -4,7 +4,7 @@
 			<solvedetail :color='color'/>
 			<div class="box">
 				<div class="tab">
-					<div v-for='(item,i) in tab' class="item"  :class='{active:$route.path==item.path}':style="{background:$route.path==item.path?color:''}"  
+					<div v-for='(item,i) in tab' class="item" :key="i" :class='{active:$route.path==item.path}' :style="{background:$route.path==item.path?color:''}"  
 					 @click='eltab(item.path)'>{{item.name}}</div> 
 				</div>
 				<router-view />

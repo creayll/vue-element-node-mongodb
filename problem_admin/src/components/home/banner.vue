@@ -9,7 +9,7 @@
 							<i class="el-icon-edit"></i>
 							<input class='editinput' multiple="multiple" type="file" @change="updata($event,item)"/>
 						</p>											
-						<a :href="https+item.img" target="_blank"><i class="el-icon-zoom-in"></i></i></a>
+						<a :href="https+item.img" target="_blank"><i class="el-icon-zoom-in"></i></a>
 						<i class="el-icon-delete" @click="deleteimg(item)"></i>
 					</div>
 				</div>

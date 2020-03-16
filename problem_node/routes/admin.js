@@ -21,6 +21,6 @@ module.exports = (app)=>{
 	app.use('/admin/push',token.check, push);
 	app.use('/admin/navigation',token.check, navigation);	
 	app.use('/admin/user',token.check, user);
-	app.use('/admin/about',token.check, about);
+	app.use('/admin/about',token.check, about); //关于我们
 	app.use('/admin/Jurisdiction',token.check, Jurisdiction);
 }

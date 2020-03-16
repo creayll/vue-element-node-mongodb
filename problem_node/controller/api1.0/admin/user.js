@@ -13,7 +13,7 @@ class User{
 	
 	async find(req,res,next){
 		var user=req.body.user
-		User_list.find({$or: [{name: {$regex : user}}, {ip: {$regex : user}}]},{psd:0}).then((data)=>{
+		User_list.find({$or: [{name: user}, {ip: user}]},{psd:0}).then((data)=>{
 			res.send({
 				code: 1,
 				message: '查询成功',

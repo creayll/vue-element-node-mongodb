@@ -53,7 +53,10 @@
 		  // 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。
 		  	...mapState("pushstore",{
 		   		messgenum: state => state.messgenum
-			})
+			}),
+		  	...mapState("loginstore",{
+		   		messgenum: state => state.loginstate
+			})			
 		},		
 		methods: {
 			submitForm(formName) {
@@ -63,21 +66,30 @@
                             .then((res)=>{                               
                                 if(res.data.status==1){
 									localStorage.setItem("token",res.data.token)
-									localStorage.setItem("user",JSON.stringify(res.data.user))										
+									this.$store.dispatch("loginstore/changelogin", res.data.user)	
+									console.log(this.$store.state.loginstore)									
 									axios.get(this.https+'home/push/querynum')
 										.then((res)=>{
+											console.log("querynum:"+res.data)
 											var messagenum=res.data.data
 											this.$store.dispatch("pushstore/changeinit", messagenum)												
 											if(this.$route.query.frompath){
+												console.log(222)
 												this.$router.push({path:this.$route.query.frompath})  	
 											}else{
+												console.log(11111)
 												this.$router.push({path:'/home'})  	
 											}									
 										})
 										.catch(function(error){
 											console.log(error);
 										}) 									                                  
-                                };              
+                                }else{
+									this.$message({
+										message: '登录失败',
+										type: 'error'
+									});											
+								}            
                             })
                             .catch(function(error){
                                 console.log(error);

@@ -1,25 +1,12 @@
 <template>
 	<div class="cooperate">
-		商务合作：2227171174@qq.com
+		商务合作：{{data.phone}}
 	</div>
 </template>
 
 <script>
 	export default {
-	  	data () {
-		    return {
-
-		    }
-	    }, 	   	
-	   	methods:{
-   			    
-	   	},
- 		mounted(){
-			
- 		},	
-		components: {
-
-		}
+		props:['data'],
 	}	
 </script>
 

@@ -15,7 +15,7 @@
 			<div style="margin-top: 20px">
 				<el-button @click="deleteMany()">删除勾选</el-button>
 			</div>
-			<el-pagination background layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
+			<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 		</div>
 	</div>
 </template>
@@ -82,9 +82,8 @@
 			handleSelectionChange(val) {
 				this.multipleSelection=val
 			},
-			handleCurrentChange(val){
-				console.log(val)
-				this.findMessage(val)	
+			handleCurrentChange(page){
+				this.findMessage(page)	
 			},
 			tableRowClassName({row, rowIndex}) {
 				if (row.isread ) {

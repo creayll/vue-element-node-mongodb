@@ -11,14 +11,14 @@ class Token{
                     next();
                 }else{
                     res.send({
-                        status: 0,
+                        status: -1,
                         message: 'token失效',
                     })              
                 }       
             })		    
 		}else{
             res.send({
-                status: 0,
+                status: -1,
                 message: 'token丢失',
             })      		    
 		}

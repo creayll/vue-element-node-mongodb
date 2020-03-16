@@ -27,7 +27,6 @@
 		color: white;		
 		.more{
 			float: right;
-			display: inline-block;
 			font-size: 12px;
 			cursor: pointer;
 			color: white;

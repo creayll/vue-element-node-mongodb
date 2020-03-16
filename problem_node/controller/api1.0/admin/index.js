@@ -55,7 +55,7 @@ class Index extends commonbase {
 				var id=fields._id
 				if(id){	//修改图片
 					console.log(allFile)
-					var img=allFile[0][1].path.split("public\\")[1]
+					var img=allFile[0][1].path.split("public/")[1]
 					Banner.updateOne(fields,{img:img}).then((data)=>{
 						var data = {
 							code: 1,
@@ -68,8 +68,9 @@ class Index extends commonbase {
 				}else{	//添加图片
 					var arr=[]
 					allFile.forEach(function(file, index) {
-						arr.push({img:file[1].path.split("public\\")[1]})
-					});						
+						arr.push({img:file[1].path.split("public/")[1]})
+					});	
+					console.log(arr)					
 					Banner.insertMany(arr,(err,data)=>{
 						if(err) {console.log(err)}
 						var data = {

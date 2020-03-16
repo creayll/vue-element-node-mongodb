@@ -2,29 +2,35 @@
 	<div class="mydata">
 		<el-form ref="form" :model="form" label-width="80px">
 			<el-form-item label="擅长:">
-				<el-checkbox-group v-model="form.type">
-					<el-checkbox label="html" name="type"></el-checkbox>
-					<el-checkbox label="css" name="type"></el-checkbox>
-					<el-checkbox label="js" name="type"></el-checkbox>
-					<el-checkbox label="php" name="type"></el-checkbox>
+				<el-checkbox-group v-model="form.Be_good_at">
+					<el-checkbox label="html" name="Be_good_at"></el-checkbox>
+					<el-checkbox label="css" name="Be_good_at"></el-checkbox>
+					<el-checkbox label="js" name="Be_good_at"></el-checkbox>
+					<el-checkbox label="php" name="Be_good_at"></el-checkbox>
 				</el-checkbox-group>
 			</el-form-item>
+			<el-form-item label="我的昵称:">
+				<el-input v-model="form.nick"></el-input>
+			</el-form-item>				
 			<el-form-item label="曾任职:">
 				<el-input v-model="form.work"></el-input>
 			</el-form-item>	
+			<el-form-item label="简介:">
+				<el-input type="textarea" v-model="form.des"></el-input>
+			</el-form-item>				
 			<el-form-item label="QQ号:">
-				<el-input v-model="form.contact"></el-input>
+				<el-input v-model="form.qq"></el-input>
 			</el-form-item>		
 			<el-form-item label="博客:">
 				<el-input v-model="form.Blog"></el-input>
 			</el-form-item>					
 			<el-form-item label="活动时间:">
 				<el-col :span="11">
-					<el-time-picker placeholder="选择时间" v-model="form.date1" style="width: 100%;"></el-time-picker>
+					<el-time-picker placeholder="选择时间" v-model="form.Activity＿time1" style="width: 100%;"></el-time-picker>
 				</el-col>
 				<el-col class="line" :span="2">-</el-col>
 				<el-col :span="11">
-					<el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+					<el-time-picker placeholder="选择时间" v-model="form.Activity＿time2" style="width: 100%;"></el-time-picker>
 				</el-col>
 			</el-form-item>		
 
@@ -59,30 +65,28 @@
 	export default {
 		data() {
 			return {
-				form: {
-					type: ['html','css'],
-					work: '阿里',
-					contact:'2227171174',
-					Blog:'www.baidu.com',
-					region: '',
-					date1: '',
-					date2: '',
-					oneprice:12,
-					threeprice:30,
-					halfyearprice:60,
-					yearprice:100,
-					delivery: false,					
-				}
-
+				form: this.$store.state.loginstore.loginstate
 			}
 		},
 		methods: {
 			onSubmit() {
-				console.log('submit!');
+				this.form._id=this.$store.state.loginstore.loginstate._id
+				axios.post(this.https+'home/personal',this.form)
+					.then((res)=>{
+						console.log(res)	
+						this.$store.dispatch("loginstore/changelogin", this.form)	
+						this.$message({
+							message: '修改成功',
+							type: 'success'
+						});													
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
 			}
 		},
 		mounted() {
-
+			console.log(this.$store.state.loginstore.loginstate)
 		},
 		components: {
 

@@ -13,7 +13,7 @@
 			</router-link>
 			<el-dropdown trigger="click" style="float: left;">
 				<span class="el-dropdown-link">
-			   		<img class="logo" src="../assets/logo.png"/> 刘杰<i class="el-icon-arrow-down el-icon--right"></i>
+			   		<img class="logo" src="../assets/logo.png"/> {{$store.state.loginstore.loginstate?$store.state.loginstore.loginstate.name:""}}<i class="el-icon-arrow-down el-icon--right"></i>
 			  	</span>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item icon="el-icon-user-solid">
@@ -52,8 +52,7 @@
 		data() {
 			return {
 				lang:'',
-				langvalue:'',
-				
+				langvalue:''
 			};
 		},
 	    sockets: {
@@ -72,7 +71,8 @@
 	            console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
 	        }
 	    },			
-        mounted(){             
+        mounted(){      
+			console.log(this.$store.state.loginstore.loginstate)       
              //用户每次刷新页面都判断 是否缓存过 语言，缓存过的话 选择其中显示的应该是缓存的语言
              if(localStorage.getItem('locale') == 'en'){
              	this.lang = this.$i18n.locale = 'en';
@@ -132,6 +132,7 @@
             exit(){
 				localStorage.clear()
 				this.$store.dispatch("pushstore/changeinit", 0)
+				this.$store.dispatch("loginstore/changelogin", null)	
 				this.$router.push({path:'/login'})
                 // axios.get(this.https+'home/exit')
                 //     .then((res)=>{

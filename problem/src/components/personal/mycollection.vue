@@ -1,6 +1,6 @@
 <template>
 	<div class="mycollection">
-		<div v-for="i in 5" class="box">
+		<div v-for="i in 5" class="box" :key="i">
 			<solvedetail :color='color'/>
 		</div>		
 	</div>

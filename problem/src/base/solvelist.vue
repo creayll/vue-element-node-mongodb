@@ -1,16 +1,16 @@
 <template>
 	<div class="solvelist">
 		<ul class="content">
-			<li :style="{borderColor:background}" v-for="i in 6">
-				<router-link to="/solve/solvedetail">
-					<span class="top" :style="{color: background}">[置顶]</span>
-					<span class="title">标题</span>
-					<span class="price">奖励金4元</span>
-					<span class="read">阅读人数3人</span>
-				</router-link>	
+			<li @click="jump(item)" :style="{borderColor:background}" v-for="(item,i) in data" :key="i">
+				<!-- <router-link to="/solve/solvedetail"> -->
+					<span class="top" :style="{color: background}" v-if="item.istimeplacement">[置顶]</span>
+					<span class="title">{{item.title}}</span>
+					<span class="price">奖励金{{item.price}}元</span>
+					<span class="read">阅读人数{{item.read}}人</span>
+				<!-- </router-link>	 -->
 				<p class="btnbox">
-					<span class="btn" :style="{background: background}"><i class="el-icon-star-on"></i>收藏</span>
-					<span class="btn" :style="{background: background}"><i class="el-icon-s-flag"></i>投标</span>
+					<span @click='Collectionx(item)' class="btn" :style="{background: item.isCollection?'grey':background}"><i class="el-icon-star-on"></i>收藏</span>
+					<span @click='Bidx(item)' class="btn" :style="{background: item.isBid?'grey':background}"><i class="el-icon-s-flag"></i>投标</span>
 				</p>				
 			</li>		
 		</ul>		
@@ -19,17 +19,55 @@
 
 <script>
 	export default {
-		props:['background'],
+		props:['background','data'],
 	  	data () {
 		    return {
 
 		    }
 	    }, 	   	
 	   	methods:{
-   			    
+   			Collectionx(item){
+				var query={fid:item._id}
+				axios.post(this.https+'home/problem/Collectionx',query)
+					.then((res)=>{
+						console.log(res.data)	
+						if(res.data.status==1){
+							item.isCollection=!item.isCollection
+							this.$message({
+								message: res.data.message,
+								type: 'success'
+							});	
+						}
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+			},
+			Bidx(item){
+				var query={fid:item._id}
+				axios.post(this.https+'home/problem/Bidx',query)
+					.then((res)=>{
+						console.log(res.data)	
+						if(res.data.status==1){
+							item.isBid=!item.isBid
+							this.$message({
+								message: res.data.message,
+								type: 'success'
+							});	
+						}
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+			},
+			jump(item){
+				sessionStorage.setItem("solvedetail",JSON.stringify(item))
+				const resolve = this.$router.resolve({path: '/solve/solvedetail'})
+				window.open(resolve.href,'_blank')				
+			}				 
 	   	},
  		mounted(){
-			
+			console.log(this.data)
  		},	
 		components: {
 

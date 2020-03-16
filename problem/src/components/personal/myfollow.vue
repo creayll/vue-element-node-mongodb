@@ -1,6 +1,6 @@
 <template>
 	<div class="myfollow">
-		<div v-for='i in 5'>
+		<div v-for='i in 5' :key="i">
 			<myteacherlist/>
 		</div>			
 	</div>

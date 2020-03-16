@@ -7,12 +7,12 @@
 			<el-table-column prop="user_id.phone" label="电话"> </el-table-column>
 			<el-table-column label="职位" width="200">
 		      	<template slot-scope="scope">
-		        	<span v-for='(item,i) in scope.row.role_arr'>{{item}}</span>
+		        	<span v-for='(item,i) in scope.row.role_arr' :key="i">{{item}}</span>
 		      	</template>				
 			</el-table-column>
 			<el-table-column prop="address" label="权限" width="400">
 		      	<template slot-scope="scope">
-		        	<span v-for='(item,i) in scope.row.auth_arr'>{{item}}</span>
+		        	<span v-for='(item,i) in scope.row.auth_arr' :key="i">{{item}}</span>
 		      	</template>						
 			</el-table-column>
 			<el-table-column fixed="right" label="操作" width="150">

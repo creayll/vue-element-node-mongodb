@@ -16,9 +16,7 @@
 	export default {
 		data() {
 			return {
-				ruleForm: {
-
-				},
+				ruleForm: {},
 				rules: {
 					email:[
 	      				{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}
@@ -29,8 +27,10 @@
 		mounted(){
 		    axios.get(this.https+'admin/about/read')
 			    .then((res)=>{
-			        console.log(res.data);   
-			        this.ruleForm= res.data.data
+					console.log(res.data);  
+					if(res.data.data){
+			        	this.ruleForm= res.data.data
+					} 
 			    })
 			    .catch(function(error){
 			        console.log(error);
@@ -40,11 +40,11 @@
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
-					    axios.post(this.https+'admin/about/update',this.ruleForm)
+					    axios.post(this.https+'home/about/update',this.ruleForm)
 						    .then((res)=>{
 						        if(res.data.code==1){
 							        this.$message({
-							          message: '恭喜您，更新成功',
+							          message: res.data.message,
 							          type: 'success'
 							        });				        	
 						        }		 		    	

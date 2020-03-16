@@ -7,8 +7,8 @@
 			</div>
 			<div class="table-cell">
 				<span class="btn" :style="{background:color}">终止任务</span>
-				<span class="btn" :style="{background:color}">终止投标</span>
 				<span class="btn" :style="{background:color}">投标</span>
+				<span class="btn" :style="{background:color}">收藏</span>
 			</div>
 		</div>
 		<div class="content">
@@ -83,11 +83,11 @@
 				.btn{
 					line-height: 30px;		
 					padding: 0 20px;
-					display: inline-block;
+					float: right;
 					color: white;
 					border-radius: 30px;
 					cursor: pointer;
-					float: right;						
+					margin-left: 5px;
 				}					
 			}
 		}

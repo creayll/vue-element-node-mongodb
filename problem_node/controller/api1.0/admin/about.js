@@ -20,13 +20,29 @@ class Aboutcontent{
 	}		
 	async update(req,res,next){
 		var query=req.body
-		About.updateOne({},query).then((data,err)=>{
-			if(err){console.log(err)}
-			res.send({
-				code: 1,
-				message: '更新数据成功',
-				data: data
-			});		
+		About.findOne().then((data)=>{
+			console.log('关于我们')
+			console.log(data)
+			if(data){
+				About.updateOne({},query).then((result,err)=>{
+					if(err){console.log(err)}
+					res.send({
+						code: 1,
+						message: '更新数据成功',
+						data: result
+					});		
+				})				
+			}else{
+				About.insertMany(query).then((result)=>{
+					if(result){
+						res.send({
+							code: 1,
+							message: '初次录入数据成功',
+							data: result
+						});							
+					}
+				})
+			}
 		})
 	}		
 }

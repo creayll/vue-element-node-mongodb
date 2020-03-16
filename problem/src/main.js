@@ -20,7 +20,7 @@ Vue.prototype.$moment = moment
 import {Checkbox,CheckboxGroup,TimePicker,InputNumber,Input,Radio,RadioGroup,Switch,Form,
     FormItem,Pagination,ColorPicker,Row, Button, Select, Option, DatePicker, Dropdown, 
     DropdownMenu, DropdownItem,Menu, MenuItem, Submenu, Carousel, CarouselItem, Image,
-    Col,Table,TableColumn,Badge,MessageBox,Message} from 'element-ui';
+    Col,Table,TableColumn,Badge,MessageBox,Message,Tabs,TabPane} from 'element-ui';
 Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 };
 Vue.use(Row)
 Vue.use(Button)
@@ -52,6 +52,9 @@ Vue.use(Checkbox)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Badge)
+Vue.use(Tabs)
+Vue.use(TabPane)
+
 Vue.prototype.$msgbox=MessageBox
 Vue.prototype.$message=Message
 
@@ -64,7 +67,16 @@ Vue.prototype.GLOBAL = {
 axios.interceptors.request.use(
   config => {
     config.headers['token'] = localStorage.getItem('token')||'';
-    config.headers['user'] = localStorage.getItem('user')||'';
+    var user=store.state.loginstore.loginstate
+    console.log(user)
+    if(user){
+      var headeruser={
+        _id:user._id,
+        type:user.type,
+        ip:user.ip
+      }
+    }
+    config.headers['user'] = JSON.stringify(headeruser);
     return config
   },
   error => Promise.error(error)
@@ -73,7 +85,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   response => {
-    if(response.data.status==0){
+    if(response.data.status==-1){
       router.push({path:'/login',query:{frompath:router.currentRoute.fullPath}}) 
       return false
     }

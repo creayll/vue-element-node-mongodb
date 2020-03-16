@@ -1,25 +1,12 @@
 <template>
 	<div class="contact">
-		联系我们：2227171174@qq.com
+		联系我们：{{data.email}}
 	</div>
 </template>
 
 <script>
 	export default {
-	  	data () {
-		    return {
-
-		    }
-	    }, 	   	
-	   	methods:{
-   			    
-	   	},
- 		mounted(){
-			
- 		},	
-		components: {
-
-		}
+		props:['data']
 	}	
 </script>
 

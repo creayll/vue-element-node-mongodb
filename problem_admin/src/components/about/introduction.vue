@@ -16,7 +16,7 @@
 		name: 'App',
 		data() {
 			return {
-				content: `<p>hello world</p>`,
+				content: ``,
 				editorOption: {}
 			}
 		},
@@ -29,7 +29,9 @@
 		    axios.get(this.https+'admin/about/read')
 			    .then((res)=>{
 			        console.log(res.data);   
-			        this.content= res.data.data.introduction
+					if(res.data.data){
+			        	this.content= res.data.data.introduction
+					} 					
 			    })
 			    .catch(function(error){
 			        console.log(error);
@@ -46,7 +48,7 @@
 				    .then((res)=>{
 				        if(res.data.code==1){
 					        this.$message({
-					          message: '恭喜您，更新成功',
+					          message: res.data.message,
 					          type: 'success'
 					        });				        	
 				        }		 				       	      			    	

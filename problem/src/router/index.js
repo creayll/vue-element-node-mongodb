@@ -28,7 +28,8 @@ import about from 'components/cooperation/about' //商务合作
 
 
 import personal from 'components/personal' //个人中心
-import mydata from 'components/personal/mydata' //我的资料
+import mydata from 'components/personal/mydata' //我的资料 
+import myforce from 'components/personal/myforce'  //我的发布
 import myteacher from 'components/personal/myteacher' //我的师傅
 import myapprentice from 'components/personal/myapprentice' //我的徒弟
 import mybid from 'components/personal/mybid' //我的投标
@@ -127,59 +128,39 @@ export default new Router({
       children: [      
         {
             path:'/',
-            component:mydata,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
-        },    
+            component:mydata          
+        },  
+        {
+          path:'myforce',
+          component:myforce         
+        },           
         {
             path:'myteacher',
-            component:myteacher,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:myteacher       
         },    
         {
             path:'myapprentice',
-            component:myapprentice,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:myapprentice          
         },    
         {
             path:'mybid',
-            component:mybid,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:mybid       
         },    
         {
             path:'mycollection',
-            component:mycollection,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:mycollection           
         },    
         {
             path:'myfollow',
-            component:myfollow,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:myfollow      
         },    
         {
             path:'myconsumption',
-            component:myconsumption,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:myconsumption      
         },    
         {
             path:'mypushstorage',
-            component:mypushstorage,
-			    	meta:{
-							islogin:true,//需要验证
-						},                
+            component:mypushstorage         
         }              
       ]        
     },{

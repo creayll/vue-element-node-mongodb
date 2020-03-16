@@ -1,41 +1,47 @@
 <template>
 	<div class="release">
 		<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm container">
-			<el-form-item label="标题" prop="name">
-				<el-input v-model="ruleForm.name"></el-input>
+			<el-form-item label="标题" prop="title">
+				<el-input v-model="ruleForm.title"></el-input>
 			</el-form-item>
-			<el-form-item label="问题" prop="desc">
-				<el-input type="textarea" v-model="ruleForm.desc"></el-input>
+			<el-form-item label="问题" prop="content">
+				<el-input type="textarea" v-model="ruleForm.content"></el-input>
 			</el-form-item>
-			<el-form-item label="奖励" prop="num">
-				<el-input-number v-model="ruleForm.num" :precision="2" :step="5" @change="handleChange" :min="5" :max="10000" label="描述文字"></el-input-number>
+			<el-form-item label="奖励" prop="price">
+				<el-input-number v-model="ruleForm.price" :precision="2" :step="5" @change="handleChange" :min="5" :max="10000" label="描述文字"></el-input-number>
 			</el-form-item>	
-			<el-form-item label="大类" prop="region1">
-				<el-select v-model="ruleForm.region1" placeholder="请选择大类">
-					<el-option label="前端" value="shanghai"></el-option>
-					<el-option label="后台" value="beijing"></el-option>
+			<el-form-item label="大类" prop="large_id">
+				<el-select v-model="ruleForm.large_id" placeholder="请选择大类" @change="largechange">
+					<el-option v-for="(item,i) in large" :key="i" :label="item.large" :value="item._id"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label="小类" prop="region2">
-				<el-select v-model="ruleForm.region2" placeholder="请选择小类">
-					<el-option label="html" value="shanghai"></el-option>
-					<el-option label="css" value="beijing"></el-option>
+			<el-form-item label="小类" prop="small_id">
+				<el-select v-model="ruleForm.small_id" placeholder="请选择小类">
+					<el-option v-for="(item,i) in small" :key="i" :label="item.name"  :value="item._id"></el-option>
 				</el-select>
 			</el-form-item>		
-			<el-form-item label="邀请" prop="num">
-			  <el-select v-model="ruleForm.value1" multiple placeholder="请选择">
-			    <el-option
-			      v-for="(item,i) in options"
-			      :key="i"
-			      :label="item.label"
-			      :value="item.value">
-			    </el-option>
-			  </el-select>		
-			</el-form-item>			
-			<el-form-item label="置顶" prop="resource">
-				<el-radio-group v-model="ruleForm.resource">
-					<el-radio label="否"></el-radio>
-					<el-radio label="是"></el-radio>
+			<el-form-item label="邀请">
+				<el-select
+					v-model="ruleForm.Invitation"
+					multiple
+					filterable
+					remote
+					reserve-keyword
+					placeholder="请输入关键词"
+					:remote-method="remoteMethod"
+					:loading="loading">
+						<el-option
+						v-for="item in options"
+						:key="item._id"
+						:label="item.name"
+						:value="item._id">
+						</el-option>
+				</el-select>	
+			</el-form-item>					
+			<el-form-item label="置顶" prop="istimeplacement">
+				<el-radio-group v-model="ruleForm.istimeplacement">
+					<el-radio :label=false>否</el-radio>
+					<el-radio :label=true>是</el-radio>
 				</el-radio-group>
 			</el-form-item>
 			<div class="buttonbox">
@@ -50,42 +56,21 @@
 	export default {
 		data() {
 			return {
-		        options: [{
-		          value: '选项1',
-		          label: '黄金糕'
-		        }, {
-		          value: '选项2',
-		          label: '双皮奶'
-		        }, {
-		          value: '选项3',
-		          label: '蚵仔煎'
-		        }, {
-		          value: '选项4',
-		          label: '龙须面'
-		        }, {
-		          value: '选项5',
-		          label: '北京烤鸭'
-		        }, {
-		          value: '选项3',
-		          label: '蚵仔煎'
-		        }, {
-		          value: '选项4',
-		          label: '龙须面'
-		        }, {
-		          value: '选项5',
-		          label: '北京烤鸭'
-		        }],       
+				large:null,//大类
+				small:null,//小类
+				loading: false,
+		        options: null,       
 				ruleForm: {
-					name: '',
-					desc: '',
-					num: 5,
-					value1: [],
-					region1: '',
-					region2: '',
-					resource: '否'
+					title: '',
+					content: '',
+					price: 5,
+					Invitation: [],
+					large_id: '',
+					small_id: '',
+					istimeplacement: false
 				},
 				rules: {
-					name: [{
+					title: [{
 							required: true,
 							message: '请输入标题',
 							trigger: 'blur'
@@ -97,7 +82,7 @@
 							trigger: 'blur'
 						}
 					],
-					desc: [{
+					content: [{
 							required: true,
 							message: '请输入标题',
 							trigger: 'blur'
@@ -108,16 +93,12 @@
 							message: '长度在 3 到 5 个字符',
 							trigger: 'blur'
 					}],
-					num: [{
-						required: true,
-						trigger: 'change'
-					}],
-					region1: [{
+					large_id: [{
 						required: true,
 						message: '请选择大类',
 						trigger: 'change'
 					}],
-					region2: [{
+					small_id: [{
 						required: true,
 						message: '请选择小类',
 						trigger: 'change'
@@ -126,13 +107,26 @@
 			};
 		},
 		mounted() {
-
+			axios.get(this.https+'home/release/Releaselist')
+				.then((res)=>{
+					console.log(res.data);   
+					this.large=res.data.data
+				})
+				.catch(function(error){
+					console.log(error);
+				}) 			
 		},
 		methods: {
 			submitForm(formName) {
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
-						alert('submit!');
+						axios.post(this.https+'home/release/issue',this.ruleForm)
+							.then((res)=>{
+								console.log(res.data);   
+							})
+							.catch(function(error){
+								console.log(error);
+							}) 	
 					} else {
 						console.log('error submit!!');
 						return false;
@@ -144,7 +138,31 @@
 			},
 		    handleChange(value) {
 		        console.log(value);
-		    }
+			},
+			largechange(id){
+				this.large.forEach(element => {
+					if(element._id===id){
+						this.small=element.small
+						this.ruleForm.small_id=''
+					}
+				});
+			},
+			remoteMethod(ip){
+				if (ip !== '') {
+				this.loading = true;
+				axios.post(this.https+'home/release/likeuserlist',{uip:ip})
+					.then((res)=>{
+						this.loading = false;
+						console.log(res.data);   
+						this.options=res.data.data
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+				} else {
+				this.options = [];
+				}
+			}
 		},
 		components: {
 	

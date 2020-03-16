@@ -1,6 +1,6 @@
 <template>
-	<div class="mybid">
-		<div v-for="i in 5" class="box">
+	<div class="mybid">	
+		<div v-for="i in 5" class="box" :key="i">
 			<solvedetail :color='color'/>
 		</div>		
 	</div>
@@ -16,7 +16,7 @@
 		    }
 	    }, 	   	
 	   	methods:{
-   			    
+
 	   	},
  		mounted(){
 			

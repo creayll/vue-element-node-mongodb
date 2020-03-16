@@ -40,8 +40,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public')); 
 
 app.all("*",function(req,res,next){
     //设置允许跨域的域名，*代表允许任意域名跨域
