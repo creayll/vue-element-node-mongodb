@@ -93,9 +93,6 @@
 				display: inline-block;	
 				vertical-align: middle;
 			}
-			.top{
-
-			}
 			.title{
 				max-width: 300px;
 				overflow: hidden;
