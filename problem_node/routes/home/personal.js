@@ -9,5 +9,6 @@ router.post('/myforce', Personal.myforce);
 router.post('/deleteitem', Personal.deleteitem);
 router.post('/Upperlower', Personal.Upperlower);
 router.post('/updata', Personal.updata);
+router.post('/mybid', Personal.mybid);
 
 module.exports = router

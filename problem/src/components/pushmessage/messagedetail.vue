@@ -26,11 +26,15 @@ export default {
             var query = {
                 _id:this.data._id
             }
-            console.log()
+            console.log(this.data)
             axios.post(this.https+'home/push/readMessagedetail',query)
                 .then((res)=>{
-                    console.log(res.data);   
-                    this.$store.dispatch("pushstore/changereduce")	
+                    console.log(res.data);  
+                    if(!this.data.isread){
+                        this.data.isread=true
+                        sessionStorage.setItem('messagedetail',this.data)
+                        this.$store.dispatch("pushstore/changereduce")	
+                    }  
                 })
                 .catch(function(error){
                     console.log(error);

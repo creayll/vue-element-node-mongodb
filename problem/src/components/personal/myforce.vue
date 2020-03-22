@@ -1,12 +1,12 @@
 <template>
 	<div class="myforce">
-		<tab :background='color'></tab>		
+		<tab :background='color' :tab='tab'></tab>		
 		<div v-for="(item,i) in data" class="box" :key="i">
 			<div class="top">
 				<div class="left">{{item.title}}</div>
 				<div class="right">
-					<span v-if="item.state==1" class="btn" :style="{background:color}" @click="Upperlower(item,i,0)">上架</span>
-					<span v-if="item.state==0||item.state==2" class="btn" :style="{background:color}" @click="Upperlower(item,i,1)">下架</span>
+					<span v-if="item.state==0" class="btn" :style="{background:color}" @click="Upperlower(item,i,1)">上架</span>
+					<span v-if="item.state==1||item.state==2" class="btn" :style="{background:color}" @click="Upperlower(item,i,0)">下架</span>
 					<span class="btn" :style="{background:color}" @click="deleteitem(item,i)">删除</span>					
 				</div>
 			</div>
@@ -26,6 +26,7 @@
 	export default {
 	  	data () {
 		    return {
+                tab:['下架','上架','已被投标','被解决'],
 				activeName: 'first',
 				data:null,
 				size:0,

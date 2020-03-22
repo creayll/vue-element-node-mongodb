@@ -54,9 +54,10 @@ Vue.use(TableColumn)
 Vue.use(Badge)
 Vue.use(Tabs)
 Vue.use(TabPane)
-
 Vue.prototype.$msgbox=MessageBox
 Vue.prototype.$message=Message
+Vue.prototype.$prompt = MessageBox.prompt
+
 
 Vue.config.productionTip = false
 Vue.prototype.GLOBAL = {

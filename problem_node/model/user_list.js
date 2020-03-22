@@ -16,8 +16,8 @@ var User_list=new Schema({
 	qq:'String',		//QQ	
 	work:'String',		//工作	
 	Blog:'String',		//博客	
-	Activity＿time1:Date,		//活动时间１	
-	Activity＿time2:Date,		//活动时间２	
+	Activity_time1:Date,		//活动时间１	
+	Activity_time2:Date,		//活动时间２	
 
 	oneprice:Number, 		//一个月多少钱
 	threeprice:Number,		//三个月多少钱

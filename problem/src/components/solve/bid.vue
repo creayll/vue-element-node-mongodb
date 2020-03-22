@@ -1,18 +1,18 @@
 <template>
 	<div class="bid">
-		<div class="table" v-for="i in 5">
+		<div class="table" v-for="(item,i) in bid" :key="i">
 			<div class="table-cell">
-				<img src="../home/img/banner.jpg"/>
+				<img :src="https+item.uid.photo"/>
 				<div class="box">
-					<p class="name">刘杰 (123123)</p>
-					<p class="price">报价:1212.00 元</p>
+					<p class="name">{{item.uid.nick}} ({{item.uid.ip}})</p>
+					<p class="price">报价:{{item.price}} 元</p>
 				</div>
 			</div>
-			<div class="table-cell">
-				<div class="btn" :style="{background:color}">同意</div>
-			</div>			
+			<!-- <div class="table-cell">
+				<div v-if="data.user_id._id==user._id" class="btn" :style="{background:color}">同意</div>
+			</div>			 -->
 		</div>		
-		<el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>			
+		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 	</div>
 </template>
 
@@ -21,14 +21,37 @@
 	export default {
 	  	data () {
 		    return {
-
+				data:JSON.parse(sessionStorage.getItem('solvedetail')),
+				user:this.$store.state.loginstore.loginstate,
+				bid:null,
+				size:0,
+				allnum:0					
 		    }
 	    }, 	   	
 	   	methods:{
-   			    
+   			init(page){
+				var query={
+					limit:8,
+					page:page,
+					fid:this.data._id
+				}
+				axios.post(this.https+'home/problem/readbid',query)
+					.then((res)=>{
+						console.log(res.data)	
+						this.bid=res.data.data	
+						this.size=res.data.size
+						this.allnum=res.data.allnum						
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+			},	
+			handleCurrentChange(page){
+				this.init(page)	
+			},				
 	   	},
  		mounted(){
-			
+			this.init(1)
  		},	
 		computed: {
 		  // 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。

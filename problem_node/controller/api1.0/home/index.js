@@ -1,5 +1,9 @@
 const Banner = require("../../../model/banner.js");
+const Problem = require("../../../model/problem.js");
 const commonbase = require('../../../prototype/commonbase');
+const Collection = require("../../../model/collection.js");
+var Bid=require('../../../model/bid.js')
+const async=require("async");
 
 class Index extends commonbase{
 	constructor(){
@@ -16,10 +20,6 @@ class Index extends commonbase{
 	}
 	
 	async recommend(req, res, next){	//推存牛人
-		res.send({
-			status: 1,
-			message: '推存牛人'
-		})
 		
 	}	
 }

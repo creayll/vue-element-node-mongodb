@@ -1,5 +1,7 @@
 const User_list = require("../../../model/user_list.js");
 var Problem=require('../../../model/problem.js')
+var Bid=require('../../../model/bid.js')
+
 var formidable = require('formidable');
 var path = require('path');
 
@@ -80,7 +82,7 @@ class Personal{
                 
                 User_list.updateOne({_id:user._id},{photo:img}).then((data)=>{
                     var data = {
-                        code: 1,
+                        status: 1,
                         messege: '修改成功',
                         data:data,
                         img: img
@@ -88,7 +90,33 @@ class Personal{
                     res.send(data);							
                 })
 			});        
-    }       
+    } 
+    
+    async mybid(req,res,next){
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit    
+        var where={uid:user._id}
+        Bid.countDocuments(where).then((num)=>{
+            var total = Math.ceil(num/limit)
+            Bid.find(where).populate({
+                path: 'fid'
+            }).populate({
+                path: 'uid'
+            }).limit(limit).skip(skip).then((data)=>{
+                res.send({
+                    status: 1,
+                    message: '我的投标查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit                    
+                });	           
+            })           
+        })
+    }
 }
 
 module.exports= new Personal()

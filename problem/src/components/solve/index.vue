@@ -90,7 +90,8 @@
 					.then((res)=>{
 						console.log(res.data)	
 						var data=res.data.data	
-						
+						this.size=res.data.size
+						this.allnum=res.data.allnum						
 						var now = new Date().getTime()
 						console.log(now)
 						var data1=[]
@@ -106,7 +107,7 @@
 									data2.push(element)
 								}
 								this.data=[...data1,...data2]
-								console.log(this.data)
+								console.log(this.data)							
 							});
 						}else{
 							this.data=data

@@ -1,20 +1,25 @@
 <template>
 	<div class="message">
-		<div class="item" v-for="i in 5" :key="i">
+		<div class="box">
+			<el-input
+			type="textarea"
+			rows='4'
+			placeholder="请输入内容"
+			v-model="text"
+			maxlength="200"
+			show-word-limit
+			>
+			</el-input>	
+			<span @click.stop="Submission" :style="{background: background}" class="btn">提交</span>
+		</div>	
+		<div class="item" v-for="(item,i) in message" :key="i">
 			<div class="top">
-				<img src="../home/img/banner.jpg"/>
-				<span class="name">liujie(12123)</span>
-				<!-- <i class="el-icon-close"></i> -->
+				<img :src="https+item.uid.photo"/>
+				<span class="name">{{item.uid.nick}}({{item.uid.ip}})</span>
 			</div>
-			<div class="content">
-				辅导费发的发的发生分数是多少会很高很高好好干哈和哈哈哈规划
-				辅导费发的发的发生分数是多少会很高很高好好干哈和哈哈哈规划
-				辅导费发的发的发生分数是多少会很高很高好好干哈和哈哈哈规划
-				辅导费发的发的发生分数是多少会很高很高好好干哈和哈哈哈规划
-				辅导费发的发的发生分数是多少会很高很高好好干哈和哈哈哈规划
-			</div>
+			<div class="content">{{item.text}}</div>
 		</div>
-		<el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>			
+		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 	</div>
 </template>
 
@@ -22,14 +27,62 @@
 	export default {
 	  	data () {
 		    return {
-
+				text:'',
+				background:this.$store.state.themecolor.color,
+				data:JSON.parse(sessionStorage.getItem('solvedetail')),
+				message:[],
+				size:0,
+				allnum:0					
 		    }
 	    }, 	   	
 	   	methods:{
-   			    
+   			init(page){
+				var query={
+					limit:1,
+					page:page,
+					fid:this.data._id
+				}
+				axios.post(this.https+'home/problem/readmessage',query)
+					.then((res)=>{
+						console.log(res.data)	
+						this.message=res.data.data	
+						this.size=res.data.size
+						this.allnum=res.data.allnum						
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+			},	
+			Submission(){
+				var query={
+					fid:this.data._id,
+					text:this.text
+				}
+				axios.post(this.https+'home/problem/message',query)
+					.then((res)=>{
+						console.log(res.data)	
+						if(res.data.status==1){
+							var item={
+								text:this.text,
+								uid:this.$store.state.loginstore.loginstate
+							}
+							this.message.push(item)
+							this.$message({
+								message: res.data.message,
+								type: 'success'
+							});							
+						}				
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 	
+			},
+			handleCurrentChange(page){
+				this.init(page)	
+			},  			    
 	   	},
  		mounted(){
-			
+			this.init(1)	
  		},	
 		components: {
 
@@ -39,6 +92,21 @@
 
 <style scoped="scoped" lang="less">
 	.message{
+		.box{
+			overflow: hidden;
+			margin-top: 10px;
+			border-bottom:1px solid gainsboro;
+			padding-bottom: 20px;
+			.btn{
+				width: 80px;
+				text-align: center;
+				border-radius:4px;
+				float: right; 
+				line-height: 30px;
+				color: white;
+				margin-top: 5px;
+			}
+		}
 		.item{
 		    padding-bottom: 5px;
 		    margin: 10px 0;
@@ -46,7 +114,7 @@
 		    border-bottom: 1px solid gainsboro;		
 		    .content{
 		    	line-height: 22px;
-		    	text-indent: 2em;
+		    	margin-left: 40px;
 		    }	
 			.top{
 				vertical-align: middle;

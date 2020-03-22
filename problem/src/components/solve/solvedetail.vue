@@ -1,7 +1,7 @@
 <template>
 	<div class="solvedetail">
 		<div class="container">
-			<solvedetail :color='color'/>
+			<solvedetail :color='color' />
 			<div class="box">
 				<div class="tab">
 					<div v-for='(item,i) in tab' class="item" :key="i" :class='{active:$route.path==item.path}' :style="{background:$route.path==item.path?color:''}"  
@@ -26,7 +26,19 @@
    			eltab(path){
    				this.$router.push({path:path})
    			}
-	   	},		
+		},	
+		mounted(){
+			var query={
+				_id:JSON.parse(sessionStorage.getItem('solvedetail'))._id
+			}
+			axios.post(this.https+'home/problem/read',query)
+				.then((res)=>{
+					console.log(res.data)				
+				})
+				.catch(function(error){
+					console.log(error);
+				}) 				
+		},
 		computed: {
 		  // 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。
 		  	...mapState("themecolor",{

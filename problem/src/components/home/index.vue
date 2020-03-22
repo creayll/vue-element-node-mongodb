@@ -10,9 +10,9 @@
 
 		<eltitle title="推存牛人" to='/teachers' :background='color'/>
 		<el-row type="flex" class="row-bg something container" justify="space-between">
-			<el-col v-for="(item,i) in src" :key="i" :span="4">
+			<el-col v-for="(item,i) in data1" :key="i" :span="4">
 				<div class="box">
-					<el-image :src="item">
+					<el-image :src="https+item.photo">
 						<div slot="error" class="image-slot">
 							<i class="el-icon-picture-outline"></i>
 						</div>
@@ -21,10 +21,10 @@
 						</div>
 					</el-image>
 					<div class="right">
-						<p>默默二位 (23124)</p>
-						<p>收徒数 5 人</p>
-						<p>解决问题 1215 个</p>
-						<p>空闲时间:09:00-02:00</p>
+						<p>{{item.nick}} ({{item.ip}})</p>
+						<p>收徒数 {{item.Apprenticenum}} 人</p>
+						<p>解决问题 {{item.Solvenum}} 个</p>
+						<p>空闲时间:{{item.Activity_time1}}-{{item.Activity_time2}}</p>
 						<p>
 							<span class="btn" :style="{background: color}">关注</span>
 							<span class="btn pull-right" :style="{background: color}">拜师</span>
@@ -36,7 +36,7 @@
 
 		<eltitle title="待解决问题" to='/solve' :background='color' />
 		<div class="container">
-			<solvelist :background='color' />
+			<solvelist v-if="data2" :background='color' :data='data2'/>
 		</div>		
 	</div>
 </template>
@@ -53,11 +53,46 @@
 					require('./img/photo.jpg'),
 					require('./img/photo.jpg'),
 					require('./img/photo.jpg')
-				]
+				],
+				data1:null,
+				data2:null
 			}
 		},
 		mounted() {
-
+			var query1={
+				page:1,
+				limit:4,
+				type:'Apprenticenum',
+				Lifting:-1
+			}
+			var p1=new Promise((j,s)=>{
+				axios.post(this.https+'home/teachers/Teacherslist',query1)
+					.then((res)=>{
+						j(res.data.data)											
+					})
+					.catch(function(error){
+						s(error)
+					}) 	
+			})	
+			var query2={
+				page:1,
+				limit:5			
+			}
+			var p2=new Promise((j,s)=>{
+				axios.post(this.https+'home/problem',query2)
+					.then((res)=>{
+						j(res.data.data)											
+					})
+					.catch(function(error){
+						s(error)
+					}) 	
+			})	
+			
+			Promise.all([p1,p2]).then(([data1,data2])=>{
+				this.data1=data1
+				this.data2=data2
+				console.log(data1)
+			})
 		},
 		methods: {
 

@@ -123,6 +123,10 @@
 						axios.post(this.https+'home/release/issue',this.ruleForm)
 							.then((res)=>{
 								console.log(res.data);   
+								this.$message({
+									message: res.data.message,
+									type: 'success'
+								});									
 							})
 							.catch(function(error){
 								console.log(error);

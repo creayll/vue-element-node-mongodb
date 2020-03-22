@@ -76,7 +76,11 @@
                             .then((res)=>{
                                 console.log(res.data)
                                 if(res.data.status==1){                                 
-//                                  this.$router.push({path:'/home'})                                    
+//                                  this.$router.push({path:'/home'})    
+									this.$message({
+										message: res.data.message,
+										type: 'success'
+									});		                                
                                 };              
                             })
                             .catch(function(error){

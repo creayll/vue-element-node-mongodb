@@ -7,23 +7,20 @@ var Problem=new Schema({
 	content:'String',
 	price:Number,	//价钱
 	read:{type:Number,default:0},	//阅读量
-	state:{type:Number,default:0},	//0上架  １下架   2已被投标　３被解决
-	timeplacement:Date,	//置顶初始时间   往后计算3天取消置顶
+	state:{type:Number,default:1},	//0下架  １上架   2已被投标　３被解决
+	isforce:{type:Boolean,default:false}, //是否强制下架　
+	timeplacement:Date,		//置顶初始时间   往后计算3天取消置顶
 	istimeplacement:Boolean,	//前端传来的值　后台要用来判断　这里没有这个会报错　
-	isCollection:Boolean, //用于给前段判断是否收藏
-	isBid:Boolean, //用于给前段判断是否投标
+	isCollection:Boolean, 	//用于给前段判断是否收藏
+	Bidprice:Number,	//用于获取bid表的price字段
+	isBid:Boolean, 		//用于给前段判断是否投标
 	large_id:Schema.ObjectId,	//大类id   
 	small_id:Schema.ObjectId,	//小类id
 	Invitation:Array,	//邀请人id数组
-	isforce:{type:Boolean,default:false}, //是否强制下架　
 	Winning:{type:Schema.ObjectId,ref:'user_list'},	//中标人
 	creatAt:{
 		type:Date,
 		default:Date.now(),
-	},
-	updataAt:{
-		type:Date,
-		default:Date.now()
 	}
 })
 
