@@ -29,9 +29,6 @@ class Release{
         const user= JSON.parse(req.get("user")); 
         var istimeplacement=query.istimeplacement //是否置顶
         if(istimeplacement){
-            console.log(istimeplacement)
-            console.log(Date.now())
-            console.log(Date.now()+3*1000*60*60*24)
             query.timeplacement=Date.now()+3*1000*60*60*24
         }
         

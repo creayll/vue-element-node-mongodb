@@ -21,7 +21,9 @@ class Index extends commonbase{
 	
 	async recommend(req, res, next){	//推存牛人
 		
-	}	
+	}
+	
+	
 }
 
 module.exports= new Index()

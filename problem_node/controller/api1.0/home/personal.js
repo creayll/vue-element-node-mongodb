@@ -1,6 +1,9 @@
 const User_list = require("../../../model/user_list.js");
 var Problem=require('../../../model/problem.js')
 var Bid=require('../../../model/bid.js')
+const Teachers = require("../../../model/teachers.js");
+const Collection = require("../../../model/collection.js");
+const Follow = require("../../../model/follow.js");
 
 var formidable = require('formidable');
 var path = require('path');
@@ -98,7 +101,8 @@ class Personal{
         var page = query.page||1   //第几页　　　　默认第一页
         var limit = query.limit||8  //每页多少条　　默认８条
         var skip = (page-1)*limit    
-        var where={uid:user._id}
+        var where={uid:user._id,state:query.state}
+        console.log(where)
         Bid.countDocuments(where).then((num)=>{
             var total = Math.ceil(num/limit)
             Bid.find(where).populate({
@@ -117,6 +121,186 @@ class Personal{
             })           
         })
     }
+
+    async myapprentice(req,res,next){   //我的徒弟
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var state=query.state
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit    
+        var where={tid:user._id,state}    
+        Teachers.countDocuments(where).then((num)=>{
+            var total = Math.ceil(num/limit)
+            Teachers.find(where).populate({
+                path: 'uid'
+            }).limit().skip(skip).then((data)=>{           
+                res.send({
+                    status: 1,
+                    message: '我的徒弟查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit                    
+                });	           
+            })           
+        })
+    }
+
+    async myteacher(req,res,next){   //我的老师
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit    
+        //type 0我的老师　　１过期的老师
+        let type=query.type
+        let now = new Date().getTime()
+        var where={uid:user._id,state:0}  
+        if(type==0){
+            where.Effective={$gte:now}
+        }else{
+            where.Effective={$lt:now}
+        }
+           
+        Teachers.countDocuments(where).then((num)=>{
+            var total = Math.ceil(num/limit)
+            Teachers.find(where).populate({
+                path: 'tid'
+            }).limit().skip(skip).then((data)=>{           
+                res.send({
+                    status: 1,
+                    message: '我的老师查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit                    
+                });	           
+            })           
+        })
+    }   
+
+    async Apprentice(req,res,next){  //同意拜师
+        let query=req.body
+        let type=query.type
+        let state=query.state
+
+        let now = new Date();
+        let month = now.getMonth()+1;
+        let year  = now.getFullYear();
+        let day  = now.getDay();
+        var hour = now.getHours();//得到小时
+        var minu = now.getMinutes();//得到分钟
+        var sec = now.getSeconds();//得到秒
+　　     var MS = now.getMilliseconds();//获取毫秒       
+
+        
+        if(type=='oneprice'){ //一个月
+            var Effective=new Date(year,month+1,day,hour,minu,sec,MS).getTime()
+        }else if(type=='threeprice'){   //三个月
+            var Effective=new Date(year,month+3,day,hour,minu,sec,MS).getTime()
+        }else if(type=='halfyearprice'){　//半年
+            var Effective=new Date(year,month+6,day,hour,minu,sec,MS).getTime()
+        }else{　//一年
+            var Effective=new Date(year+1,month,day,hour,minu,sec,MS).getTime()
+        }
+        console.log(Effective)
+        let where={
+            _id:query._id
+        }
+        Teachers.updateOne(where,{Effective,state}).then((data)=>{
+            res.send({
+                status: 1,
+                message: '操作成功',
+                data:data                
+            });	             
+        })
+    }
+
+    async mycollection(req,res,next){　//我的收藏
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit      
+        var where={
+            uid:user._id
+        }
+        Collection.countDocuments(where).then((num)=>{
+            var total = Math.ceil(num/limit)
+            Collection.find(where).populate({
+                path: 'fid'
+            }).populate({
+                path: 'uid'
+            }).limit(limit).skip(skip).then((data)=>{
+                res.send({
+                    status: 1,
+                    message: '我的收藏查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit                    
+                });	           
+            })           
+        })
+    }
+
+    async readfollow(req,res,next){ //我的关注
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var page = query.page||1   //第几页　　　　默认第一页
+        var limit = query.limit||8  //每页多少条　　默认８条
+        var skip = (page-1)*limit      
+        var where={
+            uid:user._id
+        }
+        Follow.countDocuments(where).then((num)=>{
+            var total = Math.ceil(num/limit)
+            Follow.find(where).populate({
+                path: 'fid'
+            }).populate({
+                path: 'uid'
+            }).limit(limit).skip(skip).then((data)=>{
+                res.send({
+                    status: 1,
+                    message: '我的关注查询成功',
+                    data:data,
+                    total:total,
+                    allnum:num,
+                    size:limit                    
+                });	           
+            })           
+        })        
+    }
+
+    async addfollow(req,res,next){　//关注
+        const user= JSON.parse(req.get("user")); 
+        let query=req.body
+        var type=query.type
+        var where={
+            uid:user._id,
+            fid:query.fid
+        }
+        if(type==1){ //添加
+            var follow=new Follow(where)
+            follow.save().then((data)=>{
+                res.send({
+                    status: 1,
+                    message: '关注成功',
+                    data:data           
+                });	              
+            })
+        }else{ //删除
+            Follow.deleteOne(where).then((data)=>{
+                res.send({
+                    status: 1,
+                    message: '取消关注成功',
+                    data:data           
+                });	                
+            })
+        }
+    }
+
 }
 
 module.exports= new Personal()

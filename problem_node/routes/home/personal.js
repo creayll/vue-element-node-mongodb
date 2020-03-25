@@ -10,5 +10,11 @@ router.post('/deleteitem', Personal.deleteitem);
 router.post('/Upperlower', Personal.Upperlower);
 router.post('/updata', Personal.updata);
 router.post('/mybid', Personal.mybid);
+router.post('/myapprentice', Personal.myapprentice);
+router.post('/myteacher', Personal.myteacher);
+router.post('/Apprentice', Personal.Apprentice);
+router.post('/mycollection', Personal.mycollection);
+router.post('/addfollow', Personal.addfollow);
+router.post('/readfollow', Personal.readfollow);
 
 module.exports = router

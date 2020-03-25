@@ -26,8 +26,12 @@
 						<p>解决问题 {{item.Solvenum}} 个</p>
 						<p>空闲时间:{{item.Activity_time1}}-{{item.Activity_time2}}</p>
 						<p>
-							<span class="btn" :style="{background: color}">关注</span>
-							<span class="btn pull-right" :style="{background: color}">拜师</span>
+							<span v-if="!item.isFollow" @click="follow(item,1)" class="btn" :style="{background: color}">关注</span>
+							<span v-if="item.isFollow" @click="follow(item,0)" class="btn" style="background: gray">以关注</span>
+
+							<span v-if="!item.ismyTeachers" class="btn pull-right" :style="{background: color}">未拜师</span>
+							<span v-if="item.ismyTeachers" class="btn pull-right" style="background: gray">已拜师</span>
+
 						</p>
 					</div>
 				</div>
@@ -95,7 +99,25 @@
 			})
 		},
 		methods: {
-
+			follow(item,type){
+				var query={
+					fid:item._id,
+					type
+				}
+				axios.post(this.https+'home/personal/addfollow',query)
+					.then((res)=>{
+						if(res.data.status==1){
+							item.isFollow=!item.isFollow
+							this.$message({
+								message: res.data.message,
+								type: 'success'
+							});	
+						}	
+					})
+					.catch(function(error){
+						console.log(error);
+					}) 					
+			}
 		},
 		computed: {
 			// 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。

@@ -24,6 +24,7 @@ var User_list=new Schema({
 	halfyearprice:Number,	//半年多少钱
 	yearprice:Number,		//一个月多少钱
 	ismyTeachers:Boolean, //用于判断是否是我的师傅　
+	isFollow:Boolean, //用于判断是否关注
 	radio:'String',
 	delivery:{type:Boolean,default:false}, //是否允许拜师
 	Apprenticenum:{type:Number,default:0}, //收徒数

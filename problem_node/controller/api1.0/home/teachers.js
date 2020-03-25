@@ -1,5 +1,7 @@
 const User_list = require("../../../model/user_list.js");
 const Teachers = require("../../../model/teachers.js");
+const Follow = require("../../../model/follow.js");
+
 const async=require("async");
 
 
@@ -25,15 +27,42 @@ class Teachersclass{
             var total = Math.ceil(num/limit)
             User_list.find({_id:{$ne:user._id},delivery:true}).sort(sort).limit(limit).skip(skip).then((data)=>{
                 async.forEachOf(data,(list, key1, callback1)=>{
-                    Teachers.findOne({uid:user._id,tid:list._id}).then((result)=>{	
-                        if(result){
-                            list.ismyTeachers=true
-                            list.radio=result.type
-                        }else{
-                            list.ismyTeachers=false
-                        }	
-                        callback1()
-                    })							
+                    // Teachers.findOne({uid:user._id,tid:list._id}).then((result)=>{	
+                    //     if(result){
+                    //         list.ismyTeachers=true
+                    //         list.radio=result.type
+                    //     }else{
+                    //         list.ismyTeachers=false
+                    //     }	
+                    //     callback1()
+                    // })	
+                    
+                        var p1=new Promise((j,s)=>{
+                            Teachers.findOne({uid:user._id,tid:list._id}).then((result)=>{	
+                                return j(result)
+                            })
+                        })
+                        var p2=new Promise((j,s)=>{
+                            Follow.findOne({uid:user._id,fid:list._id}).then((result)=>{
+                                return j(result)
+                            })
+                        })
+                        Promise.all([p1,p2]).then(([result1,result2])=>{
+                            if(result1){
+                                list.ismyTeachers=true
+                                list.radio=result1.type
+                            }else{
+                                list.ismyTeachers=false
+                            }	
+                            if(result2){
+                                list.isFollow=true
+                            }else{
+                                list.isFollow=false
+                            }      
+                            callback1()                                      
+                        })	                    
+
+
                 }, err => {
                     res.send({
                         status: 1,

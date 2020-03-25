@@ -8,7 +8,7 @@
 					<span class="name">{{item.uid.nick}} ({{item.uid.ip}})</span>
 				</div>	
 				<div class="table-cell">
-					<span @click.stop="Bidx(item,i)" :style="{background:color}" class="btn"><i class="el-icon-s-flag"></i>取消投标</span>
+					<span v-if="item.state==1" @click.stop="Bidx(item,i)" :style="{background:color}" class="btn"><i class="el-icon-s-flag"></i>取消投标</span>
 				</div>
 			</div>
 			<div class="box">		
@@ -35,14 +35,15 @@
 				data:null,
 				size:0,
 				allnum:0,
-				tab:['中标','待中标','未中标']				
+				tab:['中标','待中标','未中标']			//下标对应数据库状态 0中标  １待中标   2未中标	
 		    }
 	    }, 	   	
 	   	methods:{
 			init(page){
 				var query={
 					page:page,
-					limit:4
+					limit:4,
+					state:this.state
 				}
 				axios.post(this.https+'home/personal/mybid',query)
 					.then((res)=>{
