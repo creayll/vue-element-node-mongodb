@@ -69,7 +69,6 @@ axios.interceptors.request.use(
   config => {
     config.headers['token'] = localStorage.getItem('token')||'';
     var user=store.state.loginstore.loginstate
-    console.log(user)
     if(user){
       var headeruser={
         _id:user._id,
@@ -97,6 +96,25 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+router.beforeEach(( to, form, next)=>{
+  if(window.localStorage.user&&window.localStorage.user!=='null'){
+    if(to.path === '/login'){
+      //登录状态下 访问login.vue页面 会跳到index.vue     
+      next({path: '/home'});
+    }else{
+      next();
+    }
+  }else{
+    // 如果没有session ,访问任何页面。都会进入到 登录页
+    if (to.path === '/login'||to.path === '/login/register') { // 如果是登录页面的话，直接next() -->解决注销后的循环执行bug
+      next();
+    } else { // 否则 跳转到登录页面
+      next({ path: '/login' });
+    }
+  }
+}) //在跳转之前执行
+
 
 router.afterEach((to,from,next) => {
   window.scrollTo(0,0);

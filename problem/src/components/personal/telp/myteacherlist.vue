@@ -7,7 +7,7 @@
 			<p>曾任职:{{data.user.work}}</p>
 			<p>联系方式:<span v-if="data.state==0">{{data.user.qq}}</span><span v-else-if="data.state!=0">建立关系前不能看见哦</span></p>
 			<p>空闲时间:{{data.user.Activity_time1}}-{{data.user.Activity_time2}}</p>
-			<p>结束时间:<span v-if="type==0&&data.Effective">{{$moment(data.Effective).format('YYYY-MM-DD HH:mm')}}</span></p>
+			<p v-if="type==0&&data.Effective">结束时间:{{$moment(data.Effective).format('YYYY-MM-DD HH:mm')}}</p>
 		</div>
 		<div class="btnbox" v-if="data.state==1">
 			<span class="btn" :style="{background:color}" @click.stop="btnclick(0)">同意</span>
@@ -71,17 +71,21 @@
 
 <style scoped="scoped" lang="less">
 	.myteacherlist{
+		margin: 10px;
 		color: #2c3e50;	
-		border: 1px solid gainsboro;
-		margin-bottom: 10px;
+		// border: 1px solid gainsboro;
+		background: white;
+		border-right:10px; 
 		display: block;
 		border-radius: 2px;
 		overflow: hidden;
 		position: relative;
+		padding: 10px;
 		.photo{
-			width: 100px;
-			height: 100px;
+			width: 60px;
+			height: 60px;
 			vertical-align: middle;
+			border-radius: 100%;
 		}
 		.right{
 			display: inline-block;

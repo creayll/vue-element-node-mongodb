@@ -1,8 +1,10 @@
 <template>
 	<div class="myconsumption">
-		<div class="item" v-for='i in 5' :key="i">			
-			<p class="title">本月 <span class="pull-right">收入:32 支出:21&nbsp;&nbsp;&nbsp;合计:43</span></p>
-			<myconsumptionlist v-for='i in 2' :key='i'/>
+		<div class="item" v-for='i in 2' :key="i">			
+			<p class="title">本月 <span class="pull-right">收入:32 支出:21&nbsp;&nbsp;&nbsp;合计:43</span></p>			
+			<div v-for='i in 2' :key='i'>
+				<myconsumptionlist/>
+			</div>
 		</div>	
 	</div>
 </template>

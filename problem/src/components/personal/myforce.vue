@@ -1,20 +1,22 @@
 <template>
 	<div class="myforce">
-		<tab :background='color' :tab='tab'></tab>		
-		<div v-for="(item,i) in data" class="box" :key="i">
-			<div class="top">
-				<div class="left">{{item.title}}</div>
-				<div class="right">
-					<span v-if="item.state==0" class="btn" :style="{background:color}" @click="Upperlower(item,i,1)">上架</span>
-					<span v-if="item.state==1||item.state==2" class="btn" :style="{background:color}" @click="Upperlower(item,i,0)">下架</span>
-					<span class="btn" :style="{background:color}" @click="deleteitem(item,i)">删除</span>					
+		<tab :background='color' :tab='tab'></tab>	
+		<div class="contentbox">
+			<div v-for="(item,i) in data" class="box" :key="i">
+				<div class="top">
+					<div class="left">{{item.title}}</div>
+					<div class="right">
+						<span v-if="item.state==0" class="btn" :style="{background:color}" @click="Upperlower(item,i,1)">上架</span>
+						<span v-if="item.state==1||item.state==2" class="btn" :style="{background:color}" @click="Upperlower(item,i,0)">下架</span>
+						<span class="btn" :style="{background:color}" @click="deleteitem(item,i)">删除</span>					
+					</div>
 				</div>
-			</div>
-			<div class="detail">{{item.content}}</div>
-			<div class="foot">
-				<div class="pull-left">{{$moment(data.creatAt).format('YYYY-MM-DD HH:mm')}}</div>
-				<div class="pull-right">浏览{{item.read}}</div>
-			</div>			
+				<div class="detail">{{item.content}}</div>
+				<div class="foot">
+					<div class="pull-left">{{$moment(data.creatAt).format('YYYY-MM-DD HH:mm')}}</div>
+					<div class="pull-right">浏览{{item.read}}</div>
+				</div>			
+			</div>	
 		</div>	
 		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 	</div>
@@ -114,9 +116,16 @@
 
 <style scoped="scoped" lang="less">
 	.myforce{
-		.box{
-			padding: 15px;
-			border-bottom:1px solid #6666; 
+		.contentbox{
+			background: rgba(0,0,0,0.03);		
+			border-radius: 10px;
+			overflow: hidden;				
+		}		
+		.box{	
+			background: white;		
+			padding: 10px;
+			margin: 10px;
+			border-radius: 10px;
 			.top{
 				overflow: hidden;
 				line-height: 30px;	

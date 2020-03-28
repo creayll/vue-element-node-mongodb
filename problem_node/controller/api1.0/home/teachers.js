@@ -22,21 +22,15 @@ class Teachersclass{
         }else if(type=='Solvenum'){ 
             var sort={Solvenum:Lifting}
         }
-        
-        User_list.countDocuments({_id:{$ne:user._id},delivery:true}).then((num)=>{
+        var query={
+            delivery:true,  //是否允许拜师
+            _id:{$ne:user._id},
+            $or:[{oneprice:{$exists:true}},{threeprice:{$exists:true}},{halfyearprice:{$exists:true}},{yearprice:{$exists:true}}]
+        }
+        User_list.countDocuments(query).then((num)=>{
             var total = Math.ceil(num/limit)
-            User_list.find({_id:{$ne:user._id},delivery:true}).sort(sort).limit(limit).skip(skip).then((data)=>{
-                async.forEachOf(data,(list, key1, callback1)=>{
-                    // Teachers.findOne({uid:user._id,tid:list._id}).then((result)=>{	
-                    //     if(result){
-                    //         list.ismyTeachers=true
-                    //         list.radio=result.type
-                    //     }else{
-                    //         list.ismyTeachers=false
-                    //     }	
-                    //     callback1()
-                    // })	
-                    
+            User_list.find(query).sort(sort).limit(limit).skip(skip).then((data)=>{
+                async.forEachOf(data,(list, key1, callback1)=>{                   
                         var p1=new Promise((j,s)=>{
                             Teachers.findOne({uid:user._id,tid:list._id}).then((result)=>{	
                                 return j(result)

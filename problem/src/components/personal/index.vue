@@ -96,8 +96,7 @@
 				}
 			}
 			.content{
-				/*padding: 10px;*/
-				padding-left: 210px;			
+				padding-left: 210px;	
 			}			
 		}
 		.herd{

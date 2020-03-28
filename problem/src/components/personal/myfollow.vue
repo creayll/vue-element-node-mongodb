@@ -1,10 +1,10 @@
 <template>
-	<div class="myfollow">
+	<div class="myfollow">	
 		<div v-for='(item,i) in data' :key="i">
 			<myteacherlist :item='item' :type='1' :index='i'/>
-		</div>		
+		</div>	
 		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
-	</div>
+	</div>	
 </template>
 
 <script>
@@ -51,5 +51,9 @@
 </script>
 
 <style scoped="scoped" lang="less">
-	
+	.myfollow{
+		background: rgba(0,0,0,0.03);		
+		border-radius: 10px;
+		overflow: hidden;				
+	}
 </style>

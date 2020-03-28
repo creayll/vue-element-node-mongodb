@@ -1,25 +1,27 @@
 <template>
 	<div class="mybid">	
 		<tab :background='color' :tab='tab'></tab>	
-		<div v-for="(item,i) in data" class="item" :key="i">
-			<div class="table">
-				<div class="table-cell">
-					<img :src="https+item.uid.photo"/>
-					<span class="name">{{item.uid.nick}} ({{item.uid.ip}})</span>
-				</div>	
-				<div class="table-cell">
-					<span v-if="item.state==1" @click.stop="Bidx(item,i)" :style="{background:color}" class="btn"><i class="el-icon-s-flag"></i>取消投标</span>
+		<div class="contentbox">
+			<div v-for="(item,i) in data" class="item" :key="i">
+				<div class="table">
+					<div class="table-cell">
+						<img :src="https+item.uid.photo"/>
+						<span class="name">{{item.uid.nick}} ({{item.uid.ip}})</span>
+					</div>	
+					<div class="table-cell">
+						<span v-if="item.state==1" @click.stop="Bidx(item,i)" :style="{background:color}" class="btn"><i class="el-icon-s-flag"></i>取消投标</span>
+					</div>
 				</div>
-			</div>
-			<div class="box">		
-				<p class="title">{{item.fid.title}}</p>
-				<div class="detail">{{item.fid.content}}</div>
-				<div class="foot">
-					<div class="pull-left">{{$moment(item.fid.creatAt).format('YYYY-MM-DD HH:mm')}}</div>
-					<div class="pull-right">浏览{{item.fid.read}}</div>
+				<div class="box">		
+					<p class="title">{{item.fid.title}}</p>
+					<div class="detail">{{item.fid.content}}</div>
+					<div class="foot">
+						<div class="pull-left">{{$moment(item.fid.creatAt).format('YYYY-MM-DD HH:mm')}}</div>
+						<div class="pull-right">浏览{{item.fid.read}}</div>
+					</div>
 				</div>
-			</div>
-		</div>	
+			</div>	
+		</div>
 		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 	</div>
 </template>
@@ -101,10 +103,16 @@
 
 <style scoped="scoped" lang="less">
 	.mybid{		
+		.contentbox{
+			background: rgba(0,0,0,0.03);		
+			border-radius: 10px;
+			overflow: hidden;				
+		}		
 		.item{
-			margin-bottom: 15px;
-			padding-bottom: 10px;
-			border-bottom: 1px solid #6666;
+			background: white;		
+			padding: 10px;
+			margin: 10px;
+			border-radius: 10px;	
 			.table{
 				display: table;
 				width: 100%;

@@ -2,7 +2,7 @@
 	<div class="myapprentice">
 		<tab :background='color' :tab='tab'></tab>		
 
-		<div v-for='(item,i) in data' :key="i">
+		<div v-for='(item,i) in data' :key="i" class="box">
 			<myteacherlist :item='item' :type='1' :index='i'/>
 		</div>	
 		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
@@ -72,5 +72,9 @@
 </script>
 
 <style scoped="scoped" lang="less">
-	
+	.box{
+		background: rgba(0,0,0,0.03);		
+		border-radius: 10px;
+		overflow: hidden;				
+	}
 </style>

@@ -16,16 +16,16 @@
 			   		<img class="logo" src="../assets/logo.png"/> {{$store.state.loginstore.loginstate?$store.state.loginstore.loginstate.name:""}}<i class="el-icon-arrow-down el-icon--right"></i>
 			  	</span>
 				<el-dropdown-menu slot="dropdown">
-					<el-dropdown-item icon="el-icon-user-solid">
+					<el-dropdown-item icon="el-icon-user-solid" v-if="$store.state.loginstore.loginstate">
 						<router-link to="/personal">个人中心</router-link>
 					</el-dropdown-item>
-					<el-dropdown-item icon="el-icon-video-pause">
+					<el-dropdown-item icon="el-icon-video-pause" v-if="!$store.state.loginstore.loginstate">
 						<router-link to="/login">登录</router-link>
 					</el-dropdown-item>	
-					<el-dropdown-item icon="el-icon-video-play">
+					<el-dropdown-item icon="el-icon-video-play" v-if="!$store.state.loginstore.loginstate">
 						<router-link to="/login/register">注册</router-link>
 					</el-dropdown-item>					
-					<el-dropdown-item icon="el-icon-s-release">
+					<el-dropdown-item icon="el-icon-s-release" v-if="$store.state.loginstore.loginstate">
 						<span @click="exit">退出</span>
 					</el-dropdown-item>
 				</el-dropdown-menu>
