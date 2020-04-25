@@ -2,7 +2,7 @@
 	<div class="myforce">
 		<tab :background='color' :tab='tab'></tab>	
 		<div class="contentbox">
-			<div v-for="(item,i) in data" class="box" :key="i">
+			<div v-for="(item,i) in data" class="box" :key="i" @click="jump(item)">
 				<div class="top">
 					<div class="left">{{item.title}}</div>
 					<div class="right">
@@ -97,7 +97,13 @@
 				console.log(index)
 				this.state=index
 				this.init(1)	
-			}					   
+			},
+			jump(item){
+				sessionStorage.setItem("solvedetail",JSON.stringify(item))
+				// const resolve = this.$router.resolve({path: '/solve/solvedetail'})
+				// window.open(resolve.href,'_blank')	
+				this.$router.push({'path':'/solve/solvedetail'})
+			}									   
 	   	},
  		mounted(){
 			this.init(1)

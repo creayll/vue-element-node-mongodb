@@ -114,8 +114,8 @@
 			},  			    
 	   	},
  		mounted(){
-			 console.log(this.data)
-			 console.log(this.user)
+			 console.log(this.item)
+			//  console.log(this.user)
  		},	
 		components: {
 

@@ -4,6 +4,8 @@ var Bid=require('../../../model/bid.js')
 const Teachers = require("../../../model/teachers.js");
 const Collection = require("../../../model/collection.js");
 const Follow = require("../../../model/follow.js");
+const async=require("async");
+
 
 var formidable = require('formidable');
 var path = require('path');
@@ -30,7 +32,9 @@ class Personal{
         var skip = (page-1)*limit   
         Problem.count({user_id:user._id,state:query.state}).then((num)=>{   //state　为０时下架　为１时上架　为２时已被投标
             var total = Math.ceil(num/limit)
-            Problem.find({user_id:user._id,state:query.state}).limit(limit).skip(skip).then((data)=>{
+            Problem.find({user_id:user._id,state:query.state}).populate({
+                path: 'user_id'
+            }).limit(limit).skip(skip).then((data)=>{
                 res.send({
                     status: 1,
                     message: '查询成功',
@@ -106,18 +110,46 @@ class Personal{
         Bid.countDocuments(where).then((num)=>{
             var total = Math.ceil(num/limit)
             Bid.find(where).populate({
-                path: 'fid'
+                path: 'fid',
+                populate: {path:'user_id'}
             }).populate({
                 path: 'uid'
-            }).limit(limit).skip(skip).then((data)=>{
-                res.send({
-                    status: 1,
-                    message: '我的投标查询成功',
-                    data:data,
-                    total:total,
-                    allnum:num,
-                    size:limit                    
-                });	           
+            }).limit(limit).skip(skip).then((data)=>{    
+                async.forEachOf(data,(list, key1, callback1)=>{
+                    var p1=new Promise((j,s)=>{
+                        Collection.findOne({uid:user._id,fid:list.fid._id}).then((result)=>{
+                            return j(result)
+                        })
+                    })
+                    var p2=new Promise((j,s)=>{
+                        Bid.findOne({uid:user._id,fid:list.fid._id}).then((result)=>{
+                            return j(result)
+                        })
+                    })
+                    Promise.all([p1,p2]).then(([result1,result2])=>{
+                        if(result1){
+                            list.fid.isCollection=true
+                        }else{
+                            list.fid.isCollection=false
+                        }  
+                        if(result2){
+                            list.fid.isBid=true
+                            list.fid.Bidprice=result2.price
+                        }else{
+                            list.fid.isBid=false
+                        }      
+                        callback1()                                      
+                    })							
+                }, err => {
+                    res.send({
+                        status: 1,
+                        message: '查询成功',
+                        data:data,
+                        total:total,
+                        allnum:num,
+                        size:limit
+                    })                      				   
+                })                           
             })           
         })
     }
@@ -134,15 +166,15 @@ class Personal{
             var total = Math.ceil(num/limit)
             Teachers.find(where).populate({
                 path: 'uid'
-            }).limit().skip(skip).then((data)=>{           
+            }).limit(limit).skip(skip).then((data)=>{    
                 res.send({
                     status: 1,
-                    message: '我的徒弟查询成功',
+                    message: '查询成功',
                     data:data,
                     total:total,
                     allnum:num,
-                    size:limit                    
-                });	           
+                    size:limit
+                })             
             })           
         })
     }
@@ -167,15 +199,43 @@ class Personal{
             var total = Math.ceil(num/limit)
             Teachers.find(where).populate({
                 path: 'tid'
-            }).limit().skip(skip).then((data)=>{           
-                res.send({
-                    status: 1,
-                    message: '我的老师查询成功',
-                    data:data,
-                    total:total,
-                    allnum:num,
-                    size:limit                    
-                });	           
+            }).limit().skip(skip).then((data)=>{ 
+                async.forEachOf(data,(list, key1, callback1)=>{                   
+                    var p1=new Promise((j,s)=>{
+                        Teachers.findOne({uid:user._id,tid:list.tid._id}).then((result)=>{	
+                            return j(result)
+                        })
+                    })
+                    var p2=new Promise((j,s)=>{
+                        Follow.findOne({uid:user._id,fid:list.tid._id}).then((result)=>{
+                            return j(result)
+                        })
+                    })
+                    Promise.all([p1,p2]).then(([result1,result2])=>{
+                        console.log(result1)
+                        if(result1){
+                            list.tid.ismyTeachers=true
+                            list.tid.radio=result1.type
+                        }else{
+                            list.tid.ismyTeachers=false
+                        }	
+                        if(result2){
+                            list.tid.isFollow=true
+                        }else{
+                            list.tid.isFollow=false
+                        }      
+                        callback1()                                      
+                    })	                    
+                }, err => {
+                    res.send({
+                        status: 1,
+                        message: '查询成功',
+                        data:data,
+                        total:total,
+                        allnum:num,
+                        size:limit
+                    })                      				   
+                })         
             })           
         })
     }   
@@ -229,18 +289,46 @@ class Personal{
         Collection.countDocuments(where).then((num)=>{
             var total = Math.ceil(num/limit)
             Collection.find(where).populate({
-                path: 'fid'
+                path: 'fid',
+                populate: {path:'user_id'}
             }).populate({
                 path: 'uid'
             }).limit(limit).skip(skip).then((data)=>{
-                res.send({
-                    status: 1,
-                    message: '我的收藏查询成功',
-                    data:data,
-                    total:total,
-                    allnum:num,
-                    size:limit                    
-                });	           
+                async.forEachOf(data,(list, key1, callback1)=>{
+                    var p1=new Promise((j,s)=>{
+                        Collection.findOne({uid:user._id,fid:list.fid._id}).then((result)=>{
+                            return j(result)
+                        })
+                    })
+                    var p2=new Promise((j,s)=>{
+                        Bid.findOne({uid:user._id,fid:list.fid._id}).then((result)=>{
+                            return j(result)
+                        })
+                    })
+                    Promise.all([p1,p2]).then(([result1,result2])=>{
+                        if(result1){
+                            list.fid.isCollection=true
+                        }else{
+                            list.fid.isCollection=false
+                        }  
+                        if(result2){
+                            list.fid.isBid=true
+                            list.fid.Bidprice=result2.price
+                        }else{
+                            list.fid.isBid=false
+                        }      
+                        callback1()                                      
+                    })							
+                }, err => {
+                    res.send({
+                        status: 1,
+                        message: '查询成功',
+                        data:data,
+                        total:total,
+                        allnum:num,
+                        size:limit
+                    })                      				   
+                })      
             })           
         })
     }

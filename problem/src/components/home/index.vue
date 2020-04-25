@@ -12,14 +12,7 @@
 		<el-row type="flex" class="row-bg something container" justify="space-between">
 			<el-col v-for="(item,i) in data1" :key="i" :span="4">
 				<div class="box">
-					<el-image :src="https+item.photo">
-						<div slot="error" class="image-slot">
-							<i class="el-icon-picture-outline"></i>
-						</div>
-						<div slot="placeholder" class="image-slot">
-							加载中<span class="dot">...</span>
-						</div>
-					</el-image>
+					<img :src="https+item.photo"/>
 					<div class="right">
 						<p>{{item.nick}} ({{item.ip}})</p>
 						<p>收徒数 {{item.Apprenticenum}} 人</p>
@@ -140,7 +133,9 @@
 		.something {
 			font-size: 13px;
 			img {
-				height: 250px;
+				height: 200px;
+				width: 200px;
+				border-radius:100%; 
 			}
 			.el-col {
 				padding: 0 10px;

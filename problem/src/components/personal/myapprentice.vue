@@ -53,7 +53,7 @@
 			},
 			deletelist(index){
 				this.data.splice(index,1)
-			}  			    
+			} 			    
 	   	},
  		mounted(){
 			this.init(1)

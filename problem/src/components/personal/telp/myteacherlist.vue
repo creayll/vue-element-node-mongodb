@@ -1,13 +1,14 @@
 <template>
 	<!-- <router-link to='/teachers/teacherdetail' class="myteacherlist"> -->
-	<div class="myteacherlist" v-if="data">
-		<img class="photo" :src="https+data.user.photo"/>
+	<div class="myteacherlist" v-if="data" @click="jump(item)">
+		<img class="photo" :src="https+data.photo"/>
 		<div class="right">
-			<p>擅长:<span v-for="(list,i) in data.user.Be_good_at" :key="i">{{list}}</span></p>
-			<p>曾任职:{{data.user.work}}</p>
-			<p>联系方式:<span v-if="data.state==0">{{data.user.qq}}</span><span v-else-if="data.state!=0">建立关系前不能看见哦</span></p>
-			<p>空闲时间:{{data.user.Activity_time1}}-{{data.user.Activity_time2}}</p>
-			<p v-if="type==0&&data.Effective">结束时间:{{$moment(data.Effective).format('YYYY-MM-DD HH:mm')}}</p>
+			<p>昵称:{{data.nick}}</p>
+			<p>擅长:<span v-for="(list,i) in data.Be_good_at" :key="i">{{list}}</span></p>
+			<p>曾任职:{{data.work}}</p>
+			<p>联系方式:<span v-if="data.state==0">{{data.qq}}</span><span v-else-if="data.state!=0">建立关系前不能看见哦</span></p>
+			<p>空闲时间:{{$moment(data.Activity_time1).format('YYYY-MM-DD HH:mm')}}-{{$moment(data.Activity_time2).format('YYYY-MM-DD HH:mm')}}</p>
+			<p v-if="type==0">结束时间:{{$moment(data.Effective).format('YYYY-MM-DD HH:mm')}}</p>
 		</div>
 		<div class="btnbox" v-if="data.state==1">
 			<span class="btn" :style="{background:color}" @click.stop="btnclick(0)">同意</span>
@@ -46,14 +47,26 @@
 					.catch(function(error){
 						console.log(error);
 					}) 					
-			}
+			},
+			jump(item){
+				if(this.type==0){
+					sessionStorage.setItem("teacherdetail",JSON.stringify(item.tid))
+				}else{
+					sessionStorage.setItem("teacherdetail",JSON.stringify(item.uid))
+				}
+				
+				// const resolve = this.$router.resolve({path: 'teachers/teacherdetail'})
+				// window.open(resolve.href,'_blank')				
+				this.$router.push({'path':'/teachers/teacherdetail'})
+			}				
 	   	},
  		mounted(){
-			this.data=this.item
+			// this.data=this.item
+			console.log(this.type)
 			if(this.type==0){
-				this.data.user=this.item.tid
+				this.data=this.item.tid
 			}else{
-				this.data.user=this.item.uid
+				this.data=this.item.uid
 			}
 			console.log(this.data)
 		},	

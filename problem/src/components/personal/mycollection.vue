@@ -1,7 +1,7 @@
 <template>
 	<div class="mycollection">
 		<div class="contentbox">
-			<div v-for="(item,i) in data" class="item" :key="i">
+			<div v-for="(item,i) in data" class="item" :key="i" @click="jump(item)">
 				<div class="table">
 					<div class="table-cell">
 						<img :src="https+item.uid.photo"/>
@@ -57,6 +57,12 @@
 			handleCurrentChange(page){
 				this.init(page)	
 			},
+			jump(item){
+				sessionStorage.setItem("solvedetail",JSON.stringify(item.fid))
+				// const resolve = this.$router.resolve({path: '/solve/solvedetail'})
+				// window.open(resolve.href,'_blank')	
+				this.$router.push({'path':'/solve/solvedetail'})
+			}				
 	   	},
  		mounted(){
 			this.init(1)

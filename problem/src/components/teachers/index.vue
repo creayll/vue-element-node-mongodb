@@ -127,8 +127,9 @@
 			},
 			jump(item){
 				sessionStorage.setItem("teacherdetail",JSON.stringify(item))
-				const resolve = this.$router.resolve({path: 'teachers/teacherdetail'})
-				window.open(resolve.href,'_blank')				
+				// const resolve = this.$router.resolve({path: 'teachers/teacherdetail'})
+				// window.open(resolve.href,'_blank')				
+				this.$router.push({'path':'/teachers/teacherdetail'})
 			}			
 	   	},
  		mounted(){

@@ -36,7 +36,9 @@
 				</div>		
 				<div class="item">
 					<p class="title">联系方式 <span>(拜师后可见)</span></p>
-					<p class="lable" v-if="data.ismyTeachers">{{data.qq}}</p>
+					<p class="lable" v-if="data.ismyTeachers">
+						{{data.qq?data.qq:'暂无联系数据'}}
+					</p>
 				</div>			
 				<!-- <div class="btn" :style="{background:data.ismyTeachers?'grey':color}" @click="Apprentice(data)">拜师</div> -->
 				
@@ -86,6 +88,7 @@
 			},  			    
 	   	},
  		mounted(){
+			 console.log(this.data)
 			// var query = {tid:this.data._id}
 			// axios.post(this.https+'home/teachers/ismyTeachers',query)
 			// 	.then((res)=>{
