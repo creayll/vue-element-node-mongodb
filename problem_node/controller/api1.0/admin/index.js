@@ -1,8 +1,10 @@
 var formidable = require('formidable');
 var path = require('path');
+var moment = require('moment');
 
 const Banner = require("../../../model/banner.js");
 const Copyright = require("../../../model/copyright.js");
+var User_list=require('../../../model/user_list.js')
 
 const commonbase = require('../../../prototype/commonbase');
 
@@ -102,6 +104,66 @@ class Index extends commonbase {
 				message: '更新版权成功',
 				data:data
 			})				
+		})
+	}
+	
+	async userStatistics(req, res, next) { //用户统计
+		var t=6
+		var subtract=moment().subtract(t-1, "months")
+		var mouth5=subtract.format("YYYY-MM")
+		var Effective=new Date(mouth5)
+		User_list.aggregate(
+			[{ 
+				$match : { createAt : { $gt : Effective } } 
+			},
+			{
+				$project : {
+					year : {$year : "$createAt"}, 
+					month : {$month : "$createAt"}
+				}
+			},
+			{   $group : {
+					_id : {year : "$year", month : "$month"}, 
+					count : {$sum : 1}
+				}
+			},
+			{
+				$sort: {"_id": 1}
+		    }]
+		   ).then((data)=>{
+				console.log(data)			
+			   	var time=[]
+				var num=[]
+				let now = new Date();
+				let month = now.getMonth();
+				let year  = now.getFullYear();
+
+				for(var i=0;i<t;i++){
+					now.setFullYear(year);
+					now.setMonth(month - i);										
+					var imonth = (now.getMonth()+1)<10?("0"+(now.getMonth()+1)):(now.getMonth()+1);
+					var iyear  = now.getFullYear();		
+					time.unshift(iyear+"-"+imonth)	
+				}
+
+				time.forEach((item,j)=>{
+					var has = data.filter((list,i)=>{
+						return (list._id.year+"-"+(list._id.month<10?("0"+list._id.month):list._id.month))==item
+					})
+					if(has.length>0){
+						num.push(has[0].count)
+					}else{
+						num.push(0)
+					}
+				})
+				res.send({
+					code: 1,
+					message: '用户统计',
+					data:{
+						num:num,
+						time:time
+					}
+				})				
 		})
 	}
 }

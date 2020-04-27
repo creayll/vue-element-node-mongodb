@@ -1,14 +1,14 @@
 <template>
 	<div class="echarts_box">
-	  	<div class="box register">
+	  	<!-- <div class="box register">
 	    	<IEcharts :option="register" :loading="loading" @ready="onReady" @click="onClick"/>
-	  	</div>		
+	  	</div>		 -->
 	  	<div class="box access">
 	    	<IEcharts :option="access" :loading="loading" @ready="onReady" @click="onClick"/>
 	  	</div>	  	
-	  	<div class="box distribution">
+	  	<!-- <div class="box distribution">
 	    	<IEcharts :option="distribution" :loading="loading" @ready="onReady" @click="onClick"/>
-	  	</div>
+	  	</div> -->
   </div>
 </template>
  
@@ -18,7 +18,7 @@ var itemStyle={color: '#409EFF',borderWidth: 12,borderColor: 'rgba(255,102,127,0
 import IEcharts from 'vue-echarts-v3/src/full.js';
   export default {
     data: () => ({
-      	loading: true,     	
+		loading: true,    		
       	register: {
 	      	title: {
 	          	text: '访问量统计',
@@ -29,7 +29,7 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
 		        formatter: "{a} <br/>{b} : {c} ({d}%)"
 		    },
 			toolbox: {		
-			　　  show: true,	
+			　　 show: true,	
 				right:20,
 			　　  feature: {		
 			　　　　 	saveAsImage: {		
@@ -45,7 +45,7 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
 		        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 		    },
 		    yAxis: {
-		        type: 'value'
+		        type: 'value',
 		    },
 		    series: [{
 		        data: [820, 932, 901, 934, 1290, 1330, 1320],
@@ -53,20 +53,19 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
 		        areaStyle: areaStyle,
 	            itemStyle: itemStyle	
 		    }]
-      	},         	
+		},   
       	access: {
 	      	title: {
 	          	text: '用户注册统计',
 	          	left:'center'
 	      	},
 		    tooltip : {
-		        trigger: 'item',
-		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		        formatter: "{b} <br/> {c} "
 		    },
 			toolbox: {		
-			　　  show: true,	
-				right:20,
-			　　  feature: {		
+			　　show: true,	
+			    right:20,
+			　　feature: {		
 			　　　　 	saveAsImage: {		
 				　　　　 	show:true,		
 				　　　　 	excludeComponents :['toolbox'],		
@@ -77,13 +76,13 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
 		    xAxis: {
 		        type: 'category',
 		        boundaryGap: false,
-		        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		        data: []
 		    },
 		    yAxis: {
-		        type: 'value'
+				// max:5
 		    },
 		    series: [{
-		        data: [820, 932, 901, 934, 1290, 1330, 1320],
+		        data: [],
 		        type: 'line',
 		        areaStyle: areaStyle,
 	            itemStyle: itemStyle		        
@@ -120,9 +119,17 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
       	}
     }),
 	mounted() {	
-		setTimeout(()=>{
-			this.loading = !this.loading;
-		},2000)
+		axios.get(this.https+'admin/home/userStatistics',this.ruleForm)
+			.then((res)=>{
+				console.log(res.data)	
+				var data=res.data.data
+				this.loading = !this.loading;  
+				this.access.xAxis.data=data.time
+				this.access.series[0].data=data.num
+			})
+			.catch(function(error){
+				console.log(error);
+			})		
 	},    
     methods: {
       	onReady(instance, ECharts) {
@@ -142,8 +149,8 @@ import IEcharts from 'vue-echarts-v3/src/full.js';
 	.echarts_box{
 		.box{
 		    width: 100%;
-		    height: 400px;  
-		    margin-top: 10px;			
+		    height: 500px;  
+		    margin-top: 50px;			
 		}
 	}
 </style>

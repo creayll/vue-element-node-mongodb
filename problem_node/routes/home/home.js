@@ -7,4 +7,5 @@ const Index = require('../../controller/'+api+'/home/index');
 
 router.get('/banner', Index.banner);
 router.get('/recommend', Index.recommend);
+
 module.exports = router

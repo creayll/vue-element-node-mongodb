@@ -9,4 +9,6 @@ router.get('/banner', Index.banner);
 router.post('/bannersave', Index.bannersave);
 router.post('/copyrightupdata', Index.copyrightupdata);
 router.post('/copyrightread', Index.copyrightread);
+router.get('/userStatistics', Index.userStatistics); //用户统计
+
 module.exports = router
