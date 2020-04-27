@@ -72,12 +72,12 @@
 								<el-menu-item index="6-2"><router-link to='/Jurisdiction/role_add'>添加角色</router-link></el-menu-item>
 							</el-menu-item-group>
 						</el-submenu>	
-						<el-submenu index="/log">
+						<!-- <el-submenu index="/log">
 							<template slot="title"><i class="el-icon-setting"></i>日志</template>
 							<el-menu-item-group>
 								<el-menu-item index="8-1"><router-link to='/log'>日志列表</router-link></el-menu-item>
 							</el-menu-item-group>
-						</el-submenu>							
+						</el-submenu>							 -->
 					</el-menu>
 				</el-aside>
 				<el-main>
