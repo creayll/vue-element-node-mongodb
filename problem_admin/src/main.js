@@ -6,7 +6,17 @@ import router from './router'
 window.axios = require('axios');
 Vue.config.productionTip = false
 
-Vue.prototype.https = 'http://localhost:3000/';//测试环境
+if (process.env.NODE_ENV === "development") {
+    Vue.prototype.https = 'http://localhost:3000/';//测试环境
+  }else {
+      Vue.prototype.https = 'http://39.101.162.230/api/';//测试环境
+  }
+
+import VueSocketIO from 'vue-socket.io'
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: (process.env.NODE_ENV === "development")?'http://localhost:3000':'http://39.101.162.230'
+}))
 
 axios.defaults.withCredentials = true 
 
@@ -73,12 +83,6 @@ Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(CheckboxGroup)
 Vue.prototype.$message = Message
-
-import VueSocketIO from 'vue-socket.io'
-Vue.use(new VueSocketIO({
-    debug: true,
-    connection: 'http://localhost:3000',
-}))
 
 /* eslint-disable no-new */
 new Vue({

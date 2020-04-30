@@ -26,7 +26,7 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+		<el-pagination background layout="prev, pager, next" :current-page="query.page" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
 	</div>
 </template>
 
@@ -38,32 +38,6 @@
 
 <script>
 	export default {
-		mounted() {
-			axios.get(this.https + 'admin/user/read')
-				.then((res) => {
-					this.tableData = res.data.data
-				})
-				.catch(function(error) {
-					console.log(error);
-				})
-		},		
-		methods: {
-		    onSubmit() {
-				axios.post(this.https + 'admin/user/find',this.ruleForm)
-					.then((res) => {
-						this.tableData = res.data.data
-					})
-					.catch(function(error) {
-						console.log(error);
-					})
-		    },			
-			handleEdit(index, rows) {
-
-			},
-			deleteRow(index, rows) {
-				rows.splice(index, 1);
-			},
-		},
 		data() {
 			return {
 				ruleForm:{
@@ -76,8 +50,68 @@
 						trigger: 'blur'
 					}]						
 				},				
-				tableData: []
+				tableData: [],
+				size:0,
+				allnum:0,				
+				query:{
+					limit:6,
+					page:1
+				},	
+				isfind:false //用于判断页面点击页码时请求哪个接口			
 			}
+		},		
+		mounted() {
+			this.read(1)
+		},		
+		methods: {
+		    onSubmit() {
+				if(this.ruleForm.user){	//搜索框有值时请求find接口　没值时请求read接口　并且要改变isfind值　isfind用于判断页码请求哪个接口
+					this.isfind=true	
+					this.find(1)
+				}else{
+					this.isfind=false
+					this.read(1)
+				}
+		    },			
+			handleEdit(index, rows) {
+
+			},
+			read(page){
+				this.query.page=page
+				axios.post(this.https + 'admin/user/read',this.query)
+					.then((res) => {
+						this.tableData = res.data.data
+						this.allnum=res.data.allnum
+						this.size=res.data.size						
+					})
+					.catch(function(error) {
+						console.log(error);
+					})
+			},
+			find(page){
+				this.query.page=page
+				var query={...this.ruleForm,...this.query}
+				axios.post(this.https + 'admin/user/find',query)
+					.then((res) => {
+						this.tableData = res.data.data
+						this.allnum=res.data.allnum
+						this.size=res.data.size	
+						this.isfind=true			
+					})
+					.catch(function(error) {
+						console.log(error);
+					})
+			},			
+			deleteRow(index, rows) {
+				rows.splice(index, 1);
+			},
+			handleCurrentChange(page){
+				if(this.isfind){
+					this.find(page)	
+				}else{
+					this.read(page)	
+				}
+			}				
 		}
 	}
 </script>

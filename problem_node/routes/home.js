@@ -12,7 +12,7 @@ const problem =require('./home/problem.js');
 
 
 module.exports = (app)=>{
-	app.use('/', home);
+	app.use('/home/index', home);
 	app.use('/home/login', login);	//登录
 	app.use('/home/register', register);  //注册
 	app.use('/home/push', push);　//消息推送信息

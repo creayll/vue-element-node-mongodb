@@ -2,8 +2,8 @@
 	<div class="home">
 		<div class="block">
 			<el-carousel trigger="click" width="100%">
-				<el-carousel-item v-for="item in imglist" :key="item">
-					<img :src="item" width="100%" height="100%">
+				<el-carousel-item v-for="(item,i) in imglist" :key="i">
+					<img :src="https+item.img" width="100%" height="100%">
 				</el-carousel-item>
 			</el-carousel>
 		</div>
@@ -17,7 +17,7 @@
 						<p>{{item.nick}} ({{item.ip}})</p>
 						<p>收徒数 {{item.Apprenticenum}} 人</p>
 						<p>解决问题 {{item.Solvenum}} 个</p>
-						<p>空闲时间:{{item.Activity_time1}}-{{item.Activity_time2}}</p>
+						<p>空闲时间:{{$moment(item.Activity_time1).format('YYYY-MM-DD')}}-{{$moment(item.Activity_time2).format('YYYY-MM-DD')}}</p>
 						<p>
 							<span v-if="!item.isFollow" @click="follow(item,1)" class="btn" :style="{background: color}">关注</span>
 							<span v-if="item.isFollow" @click="follow(item,0)" class="btn" style="background: gray">以关注</span>
@@ -45,12 +45,7 @@
 	export default {
 		data() {
 			return {
-				imglist: [require('./img/banner.jpg'), require('./img/banner2.jpg'), require('./img/banner3.jpg')],
-				src: [require('./img/photo.jpg'),
-					require('./img/photo.jpg'),
-					require('./img/photo.jpg'),
-					require('./img/photo.jpg')
-				],
+				imglist:null,
 				data1:null,
 				data2:null
 			}
@@ -84,10 +79,21 @@
 						s(error)
 					}) 	
 			})	
-			
-			Promise.all([p1,p2]).then(([data1,data2])=>{
+
+			var p3=new Promise((j,s)=>{
+				axios.get(this.https+'home/index/bannerread')
+					.then((res)=>{
+						j(res.data.data)											
+					})
+					.catch(function(error){
+						s(error)
+					}) 	
+			})				
+
+			Promise.all([p1,p2,p3]).then(([data1,data2,data3])=>{
 				this.data1=data1
 				this.data2=data2
+				this.imglist=data3
 				console.log(data1)
 			})
 		},
@@ -133,14 +139,14 @@
 		.something {
 			font-size: 13px;
 			img {
-				height: 200px;
-				width: 200px;
+				height: 140px;
+				width: 140px;
 				border-radius:100%; 
 			}
 			.el-col {
 				padding: 0 10px;
 				.box {
-					margin-top: 5px;
+					margin-top: 10px;
 					line-height: 20px;
 					/*border:1px solid gray;*/
 					.el-image {

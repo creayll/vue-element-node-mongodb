@@ -20,6 +20,7 @@
 					<span v-if="scope.row.state==0">下架</span>
 					<span v-else-if="scope.row.state==1">上架</span>
 					<span v-else-if="scope.row.state==2">已被投标</span>
+					<span v-else-if="scope.row.state==3">被解决</span>
 				</template>	
 			</el-table-column>
 			<el-table-column label="创建时间" width="150">
@@ -80,7 +81,7 @@
 				size:0,
 				allnum:0,				
 				query:{
-					limit:2,
+					limit:6,
 					page:1
 				},
 				isfind:false //用于判断页面点击页码时请求哪个接口
@@ -91,7 +92,7 @@
 		},
 		methods: {
 		    onSubmit() {　//搜索
-				if(ruleForm.user){	//搜索框有值时请求find接口　没值时请求read接口　并且要改变isfind值　isfind用于判断页码请求哪个接口
+				if(this.ruleForm.user){	//搜索框有值时请求find接口　没值时请求read接口　并且要改变isfind值　isfind用于判断页码请求哪个接口
 					this.isfind=true	
 					this.findMessage(1)
 				}else{
