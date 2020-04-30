@@ -255,3 +255,4 @@
 [2020-04-30T13:29:16.880] [INFO] default - [::1 POST /admin/user/find 200 6ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
 [2020-04-30T13:30:12.131] [INFO] default - [::1 GET /admin/about/read 200 39ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
 [2020-04-30T13:30:12.689] [INFO] default - [::1 GET /admin/about/read 304 36ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
+[2020-04-30T13:59:18.990] [INFO] default - [::1 GET /admin/home/userStatistics 304 9ms][http://localhost:8080/ HTTP/1.1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36]
