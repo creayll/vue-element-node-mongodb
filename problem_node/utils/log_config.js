@@ -10,19 +10,19 @@ log4js.configure({
         },
         req: {//请求日志
             type: 'dateFile',
-            filename: 'logs/reqlog/',
+            filename: '/logs/reqlog/',
             pattern: 'req-yyyy-MM-dd.log',
             alwaysIncludePattern: true
         },
         err: {//错误日志
             type: 'dateFile',
-            filename: 'logs/errlog/',
+            filename: '/logs/errlog/',
             pattern: 'err-yyyy-MM-dd.log',
             alwaysIncludePattern: true
         },
         oth: {//其他日志
             type: 'dateFile',
-            filename: 'logs/othlog/',
+            filename: '/logs/othlog/',
             pattern: 'oth-yyyy-MM-dd.log',
             alwaysIncludePattern: true
         }

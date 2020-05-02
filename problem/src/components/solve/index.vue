@@ -46,7 +46,7 @@
 				priceisup:1,
 				query:{
 					page:1,
-					limit:5,
+					limit:4,
 					type:'all',
 					Lifting:0
 				}								

@@ -8,7 +8,7 @@ const async=require("async");
 class Index extends commonbase{
 	
 	async bannerread(req, res, next){	//banner
-		Banner.find().limit(1).then((data)=>{
+		Banner.find().limit(3).then((data)=>{
 			res.send({
 				status: 1,
 				message: 'banner',

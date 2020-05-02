@@ -62,7 +62,9 @@
 				axios.post(this.https+'home/teachers/Teacherslist',query)
 					.then((res)=>{
 						console.log(res.data)	
-						this.data=res.data.data											
+						this.data=res.data.data
+						this.size=res.data.size		
+						this.allnum=res.data.allnum									
 					})
 					.catch(function(error){
 						console.log(error);
