@@ -24,10 +24,12 @@
 				</template>	
 			</el-table-column>
 			<el-table-column label="创建时间" width="150">
-				<template slot-scope="scope">{{$moment(scope.creatAt).format('YYYY-MM-DD HH:mm')}}</template>	
+				<template slot-scope="scope">{{$moment(scope.row.creatAt).format('YYYY-MM-DD HH:mm')}}</template>	
 			</el-table-column>
-			<el-table-column prop="timeplacement" label="置顶到期时间" width="150">
-				<template slot-scope="scope">{{$moment(scope.timeplacement).format('YYYY-MM-DD HH:mm')}}</template>	
+			<el-table-column prop="timeplacement" label="置顶结束时间" width="150">
+				<template slot-scope="scope">					
+					{{scope.row.istimeplacement?$moment(scope.row.timeplacement).format('YYYY-MM-DD HH:mm'):"没有置顶"}}
+				</template>	
 			</el-table-column>
 			<el-table-column label="邀请人">
 				<template slot-scope="scope">

@@ -16,7 +16,7 @@
 			<el-table-column prop="title" label="标题" width="200"> </el-table-column>
 			<el-table-column prop="content" label="内容"> </el-table-column>
 			<el-table-column label="推送时间" width="150">
-				<template slot-scope="scope">{{$moment(scope.creatAt).format('YYYY-MM-DD HH:mm')}}</template>	
+				<template slot-scope="scope">{{$moment(scope.row.creatAt).format('YYYY-MM-DD HH:mm')}}</template>	
 			</el-table-column>
 		</el-table>
 		<el-pagination background :hide-on-single-page='true' layout="prev, pager, next" :total="allnum" :page-size="size" @current-change="handleCurrentChange"></el-pagination>
