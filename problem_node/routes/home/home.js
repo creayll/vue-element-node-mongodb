@@ -6,6 +6,6 @@ const router = express.Router();
 const Index = require('../../controller/'+api+'/home/index');
 
 router.get('/bannerread', Index.bannerread);
-router.get('/recommend', Index.recommend);
+router.get('/copyrightread', Index.copyrightread);
 
 module.exports = router

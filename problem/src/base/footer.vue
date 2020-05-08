@@ -1,6 +1,6 @@
 <template>
 	<div class="footer" :style="{background: background}">		
-			Copyright ©2019 大表哥！
+			<a href="http://www.beian.miit.gov.cn/" target="_blank" v-if="data">{{data.copyright}}</a>
 	</div>
 </template>
 
@@ -9,8 +9,18 @@
 		props:['background'],
 		data(){
 			return{
-				 
+				 data:null
 			}
+		},
+		mounted(){
+			axios.get(this.https+'home/index/copyrightread')
+				.then((res)=>{
+					console.log(res.data)
+					this.data=res.data.data								
+				})
+				.catch(function(error){
+					s(error)
+				}) 	
 		}
 	}
 </script>
@@ -23,5 +33,8 @@
 		text-align: center;
 		line-height: 40px;
 		color: white;
+		a{
+			color: white;
+		}
 	}
 </style>

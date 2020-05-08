@@ -97,14 +97,27 @@ class Index extends commonbase {
 	}
 	
 	async copyrightupdata(req, res, next) { //更新版权
-		let query = req.body
-		Copyright.updateOne({},query).then((data)=>{
-			res.send({
-				code: 1,
-				message: '更新版权成功',
-				data:data
-			})				
-		})
+		let query = req.body	
+		Copyright.findOne().then((data)=>{
+			if(data){
+				Copyright.updateOne({},query).then((data)=>{
+					res.send({
+						code: 1,
+						message: '更新版权成功',
+						data:data
+					})				
+				})				
+			}else{
+				var copyright=new Copyright(query)
+				copyright.save(copyright).then((dacopyrightta)=>{
+					res.send({
+						code: 1,
+						message: '更新版权成功',
+						data:data
+					})	
+				})
+			}			
+		})			
 	}
 	
 	async userStatistics(req, res, next) { //用户统计

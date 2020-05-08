@@ -38,9 +38,7 @@ class Message_push{
         var page = query.page||1   //第几页　　　　默认第一页
         var limit = query.limit||8  //每页多少条　　默认８条
         var skip = (page-1)*limit
-        Push.count().then((res)=>{
-            return res
-        }).then((num)=>{
+        Push.count().then((num)=>{
             console.log(num)
             var total = Math.ceil(num/limit)
             Push.find().populate({

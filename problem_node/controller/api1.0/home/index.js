@@ -2,6 +2,7 @@ const Banner = require("../../../model/banner.js");
 const Problem = require("../../../model/problem.js");
 const commonbase = require('../../../prototype/commonbase');
 const Collection = require("../../../model/collection.js");
+const Copyright = require("../../../model/copyright.js");
 var Bid=require('../../../model/bid.js')
 const async=require("async");
 
@@ -17,8 +18,14 @@ class Index extends commonbase{
 		})
 	}
 	
-	async recommend(req, res, next){	//推存牛人
-		
+	async copyrightread(req, res, next) { //读取版权
+		Copyright.findOne().then((data)=>{
+			res.send({
+				code: 1,
+				message: '读取版权成功',
+				data:data
+			})				
+		})
 	}
 	
 	
