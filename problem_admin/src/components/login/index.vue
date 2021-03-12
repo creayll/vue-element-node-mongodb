@@ -10,7 +10,7 @@
 			<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
 			<el-button @click="resetForm('ruleForm')">重置</el-button>
 		</el-form-item>
-	</el-form>		
+	</el-form>
 </template>
 
 <script>
@@ -21,7 +21,7 @@
 					callback(new Error('请输入昵称'));
 				}
 				callback();
-			};			
+			};
 			var validatePass = (rule, value, callback) => {
 				if(value === '') {
 					callback(new Error('请输入密码'));
@@ -37,7 +37,7 @@
 					name: [{
 						validator: validatename,
 						trigger: 'blur'
-					}],					
+					}],
 					psd: [{
 						validator: validatePass,
 						trigger: 'blur'
@@ -51,13 +51,13 @@
 					if(valid) {
 					    axios.post(this.https+'admin/login',this.ruleForm)
 						    .then((res)=>{
-						        if(res.data.status==1){						        	
-						        	this.$router.push({path:'/home'})						        	
-						        };		        
+						        if(res.data.status==1){
+						        	this.$router.push({path:'/home'})
+						        };
 						    })
 						    .catch(function(error){
 						        console.log(error);
-							})												
+							})
 					} else {
 						console.log('error submit!!');
 						return false;

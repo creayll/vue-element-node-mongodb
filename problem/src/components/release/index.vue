@@ -9,7 +9,7 @@
 			</el-form-item>
 			<el-form-item label="奖励" prop="price">
 				<el-input-number v-model="ruleForm.price" :precision="2" :step="5" @change="handleChange" :min="5" :max="10000" label="描述文字"></el-input-number>
-			</el-form-item>	
+			</el-form-item>
 			<el-form-item label="大类" prop="large_id">
 				<el-select v-model="ruleForm.large_id" placeholder="请选择大类" @change="largechange">
 					<el-option v-for="(item,i) in large" :key="i" :label="item.large" :value="item._id"></el-option>
@@ -19,7 +19,7 @@
 				<el-select v-model="ruleForm.small_id" placeholder="请选择小类">
 					<el-option v-for="(item,i) in small" :key="i" :label="item.name"  :value="item._id"></el-option>
 				</el-select>
-			</el-form-item>		
+			</el-form-item>
 			<el-form-item label="邀请">
 				<el-select
 					v-model="ruleForm.Invitation"
@@ -36,8 +36,8 @@
 						:label="item.name"
 						:value="item._id">
 						</el-option>
-				</el-select>	
-			</el-form-item>					
+				</el-select>
+			</el-form-item>
 			<el-form-item label="置顶" prop="istimeplacement">
 				<el-radio-group v-model="ruleForm.istimeplacement">
 					<el-radio :label=false>否</el-radio>
@@ -59,7 +59,7 @@
 				large:null,//大类
 				small:null,//小类
 				loading: false,
-		        options: null,       
+		        options: null,
 				ruleForm: {
 					title: '',
 					content: '',
@@ -89,8 +89,7 @@
 						},
 						{
 							min: 3,
-							max: 5,
-							message: '长度在 3 到 5 个字符',
+							message: '长度至少3个字符',
 							trigger: 'blur'
 					}],
 					large_id: [{
@@ -109,12 +108,12 @@
 		mounted() {
 			axios.get(this.https+'home/release/Releaselist')
 				.then((res)=>{
-					console.log(res.data);   
+					console.log(res.data);
 					this.large=res.data.data
 				})
 				.catch(function(error){
 					console.log(error);
-				}) 			
+				})
 		},
 		methods: {
 			submitForm(formName) {
@@ -122,15 +121,15 @@
 					if(valid) {
 						axios.post(this.https+'home/release/issue',this.ruleForm)
 							.then((res)=>{
-								console.log(res.data);   
+								console.log(res.data);
 								this.$message({
 									message: res.data.message,
 									type: 'success'
-								});									
+								});
 							})
 							.catch(function(error){
 								console.log(error);
-							}) 	
+							})
 					} else {
 						console.log('error submit!!');
 						return false;
@@ -157,19 +156,19 @@
 				axios.post(this.https+'home/release/likeuserlist',{uip:ip})
 					.then((res)=>{
 						this.loading = false;
-						console.log(res.data);   
+						console.log(res.data);
 						this.options=res.data.data
 					})
 					.catch(function(error){
 						console.log(error);
-					}) 	
+					})
 				} else {
 				this.options = [];
 				}
 			}
 		},
 		components: {
-	
+
 		}
 	}
 </script>
@@ -192,15 +191,15 @@
 			<router-link to="/release/add2">go 子路由2</router-link>
 			<router-view/>
 			<foot/>
-	</div>	
+	</div>
 </template>
 
 <script>
-import foot from 'base/footer'	
+import foot from 'base/footer'
 export default {
 	components:{
 		foot
-	}  
+	}
 }
 </script>
 

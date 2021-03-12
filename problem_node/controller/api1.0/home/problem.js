@@ -16,17 +16,21 @@ class Problemclass{
         var skip = (page-1)*limit
 
         var tabtype=query.tabtype
-        var where={$or:[{state:1},{state:2}],isforce:true}   //state 0下架  １上架   2已被投标　３被解决  isforce是否被后台强制下架
-        if(tabtype=='large'){
-            where={
-                large_id:query.id
+        var id = query.id
+        var where={$or:[{state:1},{state:2}],isforce:false}   //state 0下架  １上架   2已被投标　３被解决  isforce是否被后台强制下架
+        if (id) {
+            if(tabtype=='large'){
+                // where={
+                //     large_id:query.id
+                // }
+                where.large_id = id
+            }else if(tabtype=='small'){
+                // where={
+                //     small_id:query.id
+                // }
+                where.small_id = id
             }
-        }else if(tabtype=='small'){
-            where={
-                small_id:query.id
-            }
-        }
-
+        }      
         var Lifting=query.Lifting  //接收-1 1　-1降序　1升序
         var type=query.type
         var sort=null
@@ -37,11 +41,12 @@ class Problemclass{
         }  
 
         Problem.countDocuments(where).then((num)=>{
-            var total = Math.ceil(num/limit)
+            var total = Math.ceil(num/limit)           
             Problem.find(where).populate({
 				path: 'user_id',
 				select:'ip name nick photo'                
             }).sort(sort).limit(limit).skip(skip).then((data)=>{
+                console.log(data)
                 async.forEachOf(data,(list, key1, callback1)=>{
                     var p1=new Promise((j,s)=>{
                         Collection.findOne({uid:user._id,fid:list._id}).then((result)=>{

@@ -21,22 +21,22 @@
 					</el-dropdown-item>
 					<el-dropdown-item icon="el-icon-video-pause" v-if="!$store.state.loginstore.loginstate">
 						<router-link to="/login">登录</router-link>
-					</el-dropdown-item>	
+					</el-dropdown-item>
 					<el-dropdown-item icon="el-icon-video-play" v-if="!$store.state.loginstore.loginstate">
 						<router-link to="/login/register">注册</router-link>
-					</el-dropdown-item>					
+					</el-dropdown-item>
 					<el-dropdown-item icon="el-icon-s-release" v-if="$store.state.loginstore.loginstate">
 						<span @click="exit">退出</span>
 					</el-dropdown-item>
 				</el-dropdown-menu>
-			</el-dropdown>				
+			</el-dropdown>
 			<div style="float: left;color: white;font-size: 13px;margin-left: 20px;">
 				<span class="witch" @click="elswitch">{{langvalue}}</span>
 			  	<span class="demonstration">{{$t('Themes')}}</span>
 			  	<el-color-picker v-model="color" style="vertical-align: middle;" @active-change='activechange'></el-color-picker>
-			</div>				
-		</div>		
-		
+			</div>
+		</div>
+
 
 		<!-- 推送提示框 -->
 		<!--<el-menu router :default-active="$route.path" class="el-menu-demo" mode="horizontal" @select="handleSelect" :style="{background: color}" text-color="#fff" active-text-color="#ffd04b">
@@ -70,9 +70,9 @@
 	        customEmit: function (data) {
 	            console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
 	        }
-	    },			
-        mounted(){      
-			console.log(this.$store.state.loginstore.loginstate)       
+	    },
+        mounted(){
+			console.log(this.$store.state.loginstore.loginstate)
              //用户每次刷新页面都判断 是否缓存过 语言，缓存过的话 选择其中显示的应该是缓存的语言
              if(localStorage.getItem('locale') == 'en'){
              	this.lang = this.$i18n.locale = 'en';
@@ -81,7 +81,7 @@
              	this.lang = this.$i18n.locale = 'cn';
              	this.langvalue='中'
              }
-        },		
+        },
 		computed: {
 		  // 对象中的state 和数组中的localJobTitle 都是和login中的参数一一对应。
 		  	...mapState("themecolor",{
@@ -89,23 +89,23 @@
 			}),
 		  	...mapState("pushstore",{
 		   		messgenum: state => state.messgenum
-			}),			
+			}),
 			nav(){
 				return [{
 					path:'/home',
 					name:this.$t('home')
 				},{
 					path:'/solve',
-					name:this.$t('solve'),					
+					name:this.$t('solve'),
 				},{
 					path:'/release',
 					name:this.$t('release')
 				},{
 					path:'/teachers',
-					name:this.$t('teachers'),					
+					name:this.$t('teachers'),
 				},{
 					path:'/cooperation',
-					name:this.$t('cooperation'),					
+					name:this.$t('cooperation'),
 				}]
 			}
 		},
@@ -118,32 +118,32 @@
 				localStorage.setItem('themecolor', val)
 				console.log(this.color)
 			},
-			elswitch(){				
+			elswitch(){
                 if(this.lang == 'cn') {
                 	var lang='en'
                      this.langvalue='英'
                 } else if(this.lang == 'en') {
                 	var lang='cn'
                     this.langvalue='中'
-                }	
+                }
                 localStorage.setItem('locale', lang)
-                this.$i18n.locale =this.lang = lang    
+                this.$i18n.locale =this.lang = lang
 			},
             exit(){
 				localStorage.clear()
 				this.$store.dispatch("pushstore/changeinit", 0)
-				this.$store.dispatch("loginstore/changelogin", null)	
+				this.$store.dispatch("loginstore/changelogin", null)
 				this.$router.push({path:'/login'})
                 // axios.get(this.https+'home/exit')
                 //     .then((res)=>{
                 //         if(res.data.status==1){
                 //             this.$router.push({path:'/login'})
-                //         }           
+                //         }
                 //     })
                 //     .catch(function(error){
                 //         console.log(error);
-                //     })                  
-			}			   			
+                //     })
+			}
 		}
 	}
 </script>
@@ -154,8 +154,8 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		z-index: 111;	
-		line-height: 60px;		
+		z-index: 111;
+		line-height: 60px;
 		.nav{
 			.item{
 				width: 110px;
@@ -193,7 +193,7 @@
 				text-align: center;
 				top: 14px;
 				font-size: 12px;
-				/*animation:show 1s infinite;*/	
+				/*animation:show 1s infinite;*/
 			}
 			/*@keyframes show{
 				0% {top: 22px}
